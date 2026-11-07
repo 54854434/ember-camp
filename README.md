@@ -1,5 +1,20 @@
 # 余烬营地 · Ember Camp
 
+## 接手开发与当前进度
+
+新对话先读 [AGENTS.md](AGENTS.md) 和 [接手入口](docs/START_HERE.md)。
+
+- [项目状态与验证](docs/PROJECT_STATUS.md)
+- [开发路线图与下一项任务](docs/ROADMAP.md)
+- [当前架构](docs/ARCHITECTURE.md) / [关键决定](docs/DECISIONS.md)
+- [已知问题](docs/KNOWN_ISSUES.md) / [开发与构建](docs/DEVELOPMENT.md)
+- [变更记录](CHANGELOG.md) / [复制到新对话的一句话](CONTINUE_PROMPT.txt)
+
+最近试玩版为 **0.1.1**；当前main继续做未发布的架构整理。已拆分触屏和世界生成，修复跨营地计时与炮台余弹归属，统一检查入口。用户尚未确认0.1.1真机效果，精品美术目标仍在推进。
+
+验证（Linux，固定Godot4.4.1）：`python3 scripts/check_project.py --godot godot`。
+
+
 离线单机 Android 生存经营原型，Godot 4.4.1 / GDScript / Compatibility 渲染。
 
 **核心：勘探选址 → 搜集材料 → 负重撤离 → 自由扩建 → 布防 → 应对尸潮。**

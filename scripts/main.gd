@@ -1,6 +1,7 @@
 extends Node2D
 ## Presentation and live simulation. Gameplay rules live in Survival.
 const Rules = preload("res://scripts/survival.gd")
+const TouchRouter = preload("res://scripts/touch_router.gd")
 const INK = Color("d8e2d4")
 const MUTED = Color("8a9c96")
 const GOLD = Color("edbd72")
@@ -48,51 +49,20 @@ var raid_timer = 0.0
 var notice_timer = 0.0
 var tick = 0.0
 var intro = true
-var touch_buttons: Array[Button] = []
-var button_touches: Dictionary = {}
+var touch_router: Node
+var touch_buttons: Array[Button]:
+	get:
+		return touch_router.buttons
 var modal_backdrop: ColorRect
 var ground_texture: Texture2D
 var tree_texture: Texture2D
 
-func _input(event: InputEvent) -> void:
-	# Native Android touch events do not activate BaseButton without mouse
-	# emulation. Route each finger independently so move + fire works together.
-	if event is InputEventScreenDrag and button_touches.has(event.index):
-		get_viewport().set_input_as_handled()
-		return
-	if not event is InputEventScreenTouch:
-		return
-	if not event.pressed:
-		if not button_touches.has(event.index):
-			return
-		var control: Button = button_touches[event.index]
-		button_touches.erase(event.index)
-		if is_instance_valid(control):
-			control.modulate = Color.WHITE
-			control.button_up.emit()
-			if control.is_visible_in_tree() and control.get_global_rect().has_point(event.position):
-				control.pressed.emit()
-		get_viewport().set_input_as_handled()
-		return
-	var modal: Control = null
+func active_touch_modal() -> Control:
 	if paused and is_instance_valid(pause_panel) and pause_panel.visible:
-		modal = pause_panel
-	elif menu_open:
-		modal = inventory_panel if is_instance_valid(inventory_panel) and inventory_panel.visible else home_panel
-	for index in range(touch_buttons.size() - 1, -1, -1):
-		var control = touch_buttons[index]
-		if not is_instance_valid(control) or control.is_queued_for_deletion() or not control.is_visible_in_tree() or control.disabled:
-			continue
-		if modal != null and not modal.is_ancestor_of(control):
-			continue
-		if control.get_global_rect().has_point(event.position):
-			button_touches[event.index] = control
-			control.modulate = Color("f1c98b")
-			control.button_down.emit()
-			get_viewport().set_input_as_handled()
-			return
-	if modal != null:
-		get_viewport().set_input_as_handled()
+		return pause_panel
+	if menu_open:
+		return inventory_panel if is_instance_valid(inventory_panel) and inventory_panel.visible else home_panel
+	return null
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
@@ -103,6 +73,9 @@ func _ready() -> void:
 		tree_texture = load("res://assets/spruce-v2.png")
 	state.load_game()
 	camera_pos = state.position
+	touch_router = TouchRouter.new()
+	touch_router.modal_provider = active_touch_modal
+	add_child(touch_router)
 	setup_ui()
 	refresh_chunks()
 	if state.raid_active:
@@ -563,11 +536,8 @@ func place_at(pos: Vector2) -> void:
 	update_build_text()
 
 func clear_input() -> void:
-	for control in button_touches.values():
-		if is_instance_valid(control):
-			control.modulate = Color.WHITE
-			control.button_up.emit()
-	button_touches.clear()
+	if is_instance_valid(touch_router):
+		touch_router.release_all()
 	touches.clear()
 	stick = Vector2.ZERO
 	stick_id = -1
@@ -629,7 +599,7 @@ func button(text: String, callback: Callable, parent: Node, width: float = 110) 
 	control.add_theme_stylebox_override("pressed", style_box(Color("465644"), GOLD))
 	control.pressed.connect(callback)
 	control.focus_mode = Control.FOCUS_NONE
-	touch_buttons.append(control)
+	touch_router.register_button(control)
 	parent.add_child(control)
 	return control
 

@@ -1,8 +1,9 @@
 class_name Survival
 extends RefCounted
 ## Pure state and rules. All world positions use integer cell keys or Vector2.
+const WorldGenerator = preload("res://scripts/world_generator.gd")
 const CELL = 64.0
-const CHUNK = 768.0
+const CHUNK = WorldGenerator.CHUNK
 const SAVE_VERSION = 1
 const SAVE_PATH = "user://camp_v1.json"
 const ITEMS = {
@@ -56,7 +57,7 @@ var save_error = ""
 
 func _init() -> void:
 	structures["0,0"] = {"kind": "core", "hp": 600.0, "camp_id": active_camp}
-	camps[active_camp] = {"name": "主营地", "cell": [0, 0], "stock": stash, "threat": 0.0}
+	camps[active_camp] = {"name": "主营地", "cell": [0, 0], "stock": stash, "threat": 0.0, "generator_seconds": 0.0, "turret_rounds": 0}
 
 func cell_key(cell: Vector2i) -> String:
 	return "%d,%d" % [cell.x, cell.y]
@@ -248,35 +249,10 @@ func eat() -> bool:
 	return true
 
 func chunk_data(chunk: Vector2i) -> Dictionary:
-	# Per-coordinate seed: generation order and negative coordinates are stable.
-	var rng = RandomNumberGenerator.new()
-	rng.seed = (str(world_seed) + ":" + cell_key(chunk)).hash()
-	var origin = Vector2(chunk) * CHUNK
-	var loot: Array = []
-	var obstacles: Array = []
-	var zombies: Array = []
-	var biome = rng.randi_range(0, 2)
-	for index in range(9):
-		var pos = origin + Vector2(rng.randf_range(65, 700), rng.randf_range(65, 700))
-		if pos.length() < 520:
-			continue
-		obstacles.append({"pos": pos, "size": Vector2(64, 56) if biome == 1 else Vector2(30, 30), "type": biome})
-	for index in range(4):
-		var pos = origin + Vector2(100 + index % 2 * 430, 110 + index / 2 * 400)
-		if pos.length() < 490:
-			continue
-		var item = str(ITEMS.keys()[rng.randi_range(0, ITEMS.size() - 1)])
-		loot.append({"id": "%s/L%d" % [cell_key(chunk), index], "pos": pos, "item": item, "qty": rng.randi_range(2, 5)})
-	for index in range(3):
-		var pos = origin + Vector2(rng.randf_range(100, 650), rng.randf_range(100, 650))
-		if pos.length() < 540:
-			continue
-		zombies.append({"id": "%d/%s/Z%d" % [day, cell_key(chunk), index], "pos": pos, "kind": rng.randi_range(0, 2)})
-	return {"biome": biome, "loot": loot, "obstacles": obstacles, "zombies": zombies}
+	return WorldGenerator.generate(world_seed, day, chunk)
 
 func snapshot() -> Dictionary:
-	camps[active_camp].stock = stash
-	camps[active_camp].threat = threat
+	_store_active_camp()
 	return {"version": SAVE_VERSION, "seed": world_seed, "day": day, "stash": stash,
 		"bag": bag, "structures": structures, "opened": opened, "dead": dead,
 		"position": [position.x, position.y], "hp": hp, "stamina": stamina,
@@ -310,9 +286,26 @@ func restore(data: Dictionary) -> bool:
 	stash = camps[active_camp].stock
 	convoys = data.get("convoys", [])
 	convoy_serial = int(data.get("convoy_serial", 0))
-	generator_seconds = float(data.get("generator_seconds", 0))
-	turret_rounds = int(data.get("turret_rounds", 0))
+	# v1 saves used global counters; migrate those only into the saved active camp.
+	generator_seconds = float(camps[active_camp].get("generator_seconds", data.get("generator_seconds", 0)))
+	turret_rounds = int(camps[active_camp].get("turret_rounds", data.get("turret_rounds", 0)))
 	return true
+
+func _store_active_camp() -> void:
+	camps[active_camp].stock = stash
+	camps[active_camp].threat = threat
+	camps[active_camp].generator_seconds = generator_seconds
+	camps[active_camp].turret_rounds = turret_rounds
+
+func _activate_camp(id: String) -> void:
+	# Caller validates physical arrival or pays for a newly founded camp first.
+	active_camp = id
+	var cell = camps[id].cell
+	camp_cell = Vector2i(int(cell[0]), int(cell[1]))
+	stash = camps[id].stock
+	threat = float(camps[id].get("threat", 0))
+	generator_seconds = float(camps[id].get("generator_seconds", 0))
+	turret_rounds = int(camps[id].get("turret_rounds", 0))
 
 func save_game(path: String = SAVE_PATH) -> bool:
 	# Write-then-rename, with previous complete file retained as a backup.
@@ -366,12 +359,11 @@ func found_outpost(cell: Vector2i) -> String:
 			return "需随身携带木材 8、废金属 6、罐头 2；可在整备界面装载建营包"
 	for item in cost:
 		bag[item] -= cost[item]
-	camps[active_camp].stock = stash
-	camps[active_camp].threat = threat
-	active_camp = "camp_%d" % camps.size()
-	camp_cell = cell
-	stash = {"wood": 0, "scrap": 0, "cloth": 0, "food": 0, "med": 0, "ammo": 0, "fuel": 0}
-	camps[active_camp] = {"name": "前哨 %d" % camps.size(), "cell": [cell.x, cell.y], "stock": stash, "threat": 0.0}
+	_store_active_camp()
+	var id = "camp_%d" % camps.size()
+	var stock = {"wood": 0, "scrap": 0, "cloth": 0, "food": 0, "med": 0, "ammo": 0, "fuel": 0}
+	camps[id] = {"name": "前哨 %d" % camps.size(), "cell": [cell.x, cell.y], "stock": stock, "threat": 0.0, "generator_seconds": 0.0, "turret_rounds": 0}
+	_activate_camp(id)
 	structures[core_key()] = {"kind": "core", "hp": 600.0, "camp_id": active_camp}
 	threat = 0
 	site_locked = true
@@ -383,12 +375,8 @@ func enter_camp(id: String) -> bool:
 	var cell = Vector2i(int(camps[id].cell[0]), int(camps[id].cell[1]))
 	if position.distance_to(cell_position(cell)) > 210:
 		return false
-	camps[active_camp].stock = stash
-	camps[active_camp].threat = threat
-	active_camp = id
-	camp_cell = cell
-	stash = camps[id].stock
-	threat = float(camps[id].get("threat", 0))
+	_store_active_camp()
+	_activate_camp(id)
 	return true
 
 func dispatch_convoy(target: String, cargo: Dictionary, escorted: bool = true) -> String:

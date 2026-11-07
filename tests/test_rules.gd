@@ -99,6 +99,26 @@ func _init() -> void:
 	var delivered_once = in_transit.camps.camp_1.stock.wood
 	in_transit.update_convoys(10000)
 	check(in_transit.camps.camp_1.stock.wood == delivered_once, "no duplicate convoy credit")
+	# Active-camp aliases must not teleport turret magazines or fuel progress.
+	network.turret_rounds = 23
+	network.generator_seconds = 57.5
+	network.position = Vector2(4096, 192)
+	check(network.enter_camp("camp_1"), "physical arrival at outpost")
+	check(network.turret_rounds == 0 and network.generator_seconds == 0, "new camp does not inherit main camp counters")
+	network.turret_rounds = 8
+	network.generator_seconds = 4.0
+	network.position = Vector2(1024, -704)
+	check(network.enter_camp("camp_0"), "return to main camp")
+	check(network.turret_rounds == 23 and network.generator_seconds == 57.5, "main camp retains its counters")
+	var saved_network = Rules.new()
+	check(saved_network.restore(JSON.parse_string(JSON.stringify(network.snapshot()))), "camp counters roundtrip")
+	check(int(saved_network.camps.camp_1.turret_rounds) == 8 and float(saved_network.camps.camp_1.generator_seconds) == 4.0, "inactive camp counters persist")
+	var legacy = network.snapshot().duplicate(true)
+	for camp in legacy.camps.values():
+		camp.erase("turret_rounds")
+		camp.erase("generator_seconds")
+	var migrated = Rules.new()
+	check(migrated.restore(legacy) and migrated.turret_rounds == 23 and migrated.generator_seconds == 57.5, "legacy global counters migrate to active camp")
 	var path = "user://test_camp.json"
 	check(s.save_game(path), "atomic save")
 	s.hp = 42

@@ -89,6 +89,26 @@ func run():
  touch(3,enter.get_global_rect().get_center(),true)
  touch(3,Vector2(1,1),false)
  check(scene.menu_open, "dragged-out release cancels button")
+ # Two contacts on a held action must not release it prematurely.
+ scene.close_home()
+ fire = find_button("开火")
+ touch(4, fire.get_global_rect().get_center(), true)
+ touch(5, fire.get_global_rect().get_center(), true)
+ touch(4, fire.get_global_rect().get_center(), false)
+ check(scene.firing, "second fire contact retains hold")
+ touch(5, fire.get_global_rect().get_center(), false)
+ check(not scene.firing, "last fire contact releases hold")
+ # Rebuilding transient menus must not retain dead Button instances forever.
+ var registered = scene.touch_buttons.size()
+ for cycle in range(8):
+  scene.open_inventory()
+  await process_frame
+  scene.open_inventory()
+  await process_frame
+ check(scene.touch_buttons.size() <= registered + 1, "transient buttons unregister")
+ touch(6, fire.get_global_rect().get_center(), true)
+ scene.clear_input()
+ check(scene.touch_router.captures.is_empty() and not scene.firing, "focus/menu cancellation releases captures")
  scene.queue_free()
  await process_frame
  print("TOUCH CHECKS: %d passed, %d failed" % [checks - failed, failed])

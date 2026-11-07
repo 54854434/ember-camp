@@ -57,6 +57,7 @@ jobs:
           godot --headless --path . --editor --import --quit 2>&1 | tee /tmp/import.log
           if grep -E 'SCRIPT ERROR|Parse Error' /tmp/import.log; then exit 1; fi
           godot --headless --path . --script tests/test_rules.gd
+          XDG_DATA_HOME=/tmp/ember-touch godot --headless --path . --script tests/test_touch.gd
           mkdir -p /tmp/ember-smoke
           XDG_DATA_HOME=/tmp/ember-smoke godot --headless --path . --script tests/smoke.gd
       - name: Export and verify APK signature

@@ -48,10 +48,59 @@ var raid_timer = 0.0
 var notice_timer = 0.0
 var tick = 0.0
 var intro = true
+var touch_buttons: Array[Button] = []
+var button_touches: Dictionary = {}
+var modal_backdrop: ColorRect
+var ground_texture: Texture2D
+var tree_texture: Texture2D
+
+func _input(event: InputEvent) -> void:
+	# Native Android touch events do not activate BaseButton without mouse
+	# emulation. Route each finger independently so move + fire works together.
+	if event is InputEventScreenDrag and button_touches.has(event.index):
+		get_viewport().set_input_as_handled()
+		return
+	if not event is InputEventScreenTouch:
+		return
+	if not event.pressed:
+		if not button_touches.has(event.index):
+			return
+		var control: Button = button_touches[event.index]
+		button_touches.erase(event.index)
+		if is_instance_valid(control):
+			control.modulate = Color.WHITE
+			control.button_up.emit()
+			if control.is_visible_in_tree() and control.get_global_rect().has_point(event.position):
+				control.pressed.emit()
+		get_viewport().set_input_as_handled()
+		return
+	var modal: Control = null
+	if paused and is_instance_valid(pause_panel) and pause_panel.visible:
+		modal = pause_panel
+	elif menu_open:
+		modal = inventory_panel if is_instance_valid(inventory_panel) and inventory_panel.visible else home_panel
+	for index in range(touch_buttons.size() - 1, -1, -1):
+		var control = touch_buttons[index]
+		if not is_instance_valid(control) or control.is_queued_for_deletion() or not control.is_visible_in_tree() or control.disabled:
+			continue
+		if modal != null and not modal.is_ancestor_of(control):
+			continue
+		if control.get_global_rect().has_point(event.position):
+			button_touches[event.index] = control
+			control.modulate = Color("f1c98b")
+			control.button_down.emit()
+			get_viewport().set_input_as_handled()
+			return
+	if modal != null:
+		get_viewport().set_input_as_handled()
 
 func _ready() -> void:
 	get_tree().auto_accept_quit = false
 	font = load("res://assets/NotoSansCJKsc-Regular.otf") if ResourceLoader.exists("res://assets/NotoSansCJKsc-Regular.otf") else ThemeDB.fallback_font
+	if ResourceLoader.exists("res://assets/forest-ground-v2.png"):
+		ground_texture = load("res://assets/forest-ground-v2.png")
+	if ResourceLoader.exists("res://assets/spruce-v2.png"):
+		tree_texture = load("res://assets/spruce-v2.png")
 	state.load_game()
 	camera_pos = state.position
 	setup_ui()
@@ -59,6 +108,8 @@ func _ready() -> void:
 	if state.raid_active:
 		start_raid(true)
 	open_home()
+	paused = false
+	pause_panel.visible = false
 	if intro:
 		notify("欢迎来到余烬营地。先在营地整备，再向外探索。", 7)
 	set_process(true)
@@ -129,6 +180,7 @@ func _process(delta: float) -> void:
 	notice_timer -= dt
 	notice_label.visible = notice_timer > 0
 	update_hud()
+	modal_backdrop.visible = menu_open or paused
 	queue_redraw()
 
 func update_player(dt: float) -> void:
@@ -511,6 +563,11 @@ func place_at(pos: Vector2) -> void:
 	update_build_text()
 
 func clear_input() -> void:
+	for control in button_touches.values():
+		if is_instance_valid(control):
+			control.modulate = Color.WHITE
+			control.button_up.emit()
+	button_touches.clear()
 	touches.clear()
 	stick = Vector2.ZERO
 	stick_id = -1
@@ -539,6 +596,7 @@ func describe_items(items: Dictionary) -> String:
 func make_label(text: String, size: int = 18, color: Color = INK) -> Label:
 	var label = Label.new()
 	label.text = text
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", size)
 	label.add_theme_color_override("font_color", color)
@@ -550,6 +608,9 @@ func style_box(color: Color, border: Color = Color("3b514e")) -> StyleBoxFlat:
 	box.border_color = border
 	box.set_border_width_all(1)
 	box.set_corner_radius_all(8)
+	box.shadow_color = Color(0, 0, 0, 0.28)
+	box.shadow_size = 5
+	box.shadow_offset = Vector2(0, 4)
 	box.content_margin_left = 18
 	box.content_margin_right = 18
 	box.content_margin_top = 12
@@ -559,14 +620,16 @@ func style_box(color: Color, border: Color = Color("3b514e")) -> StyleBoxFlat:
 func button(text: String, callback: Callable, parent: Node, width: float = 110) -> Button:
 	var control = Button.new()
 	control.text = text
-	control.custom_minimum_size = Vector2(width, 52)
+	control.custom_minimum_size = Vector2(width, 58)
 	control.add_theme_font_override("font", font)
-	control.add_theme_font_size_override("font_size", 17)
+	control.add_theme_font_size_override("font_size", 19)
 	control.add_theme_color_override("font_color", INK)
 	control.add_theme_stylebox_override("normal", style_box(Color("182c2a")))
 	control.add_theme_stylebox_override("hover", style_box(Color("29413a"), GOLD))
 	control.add_theme_stylebox_override("pressed", style_box(Color("465644"), GOLD))
 	control.pressed.connect(callback)
+	control.focus_mode = Control.FOCUS_NONE
+	touch_buttons.append(control)
 	parent.add_child(control)
 	return control
 
@@ -631,6 +694,12 @@ func setup_ui() -> void:
 	var exit_button = button("按住撤离 · 4 秒", func(): pass, exit_row, 210)
 	exit_button.button_down.connect(func(): touches["extract"] = true; extract_hold = true)
 	exit_button.button_up.connect(func(): touches.erase("extract"); clear_extract())
+	modal_backdrop = ColorRect.new()
+	modal_backdrop.color = Color(0.015, 0.025, 0.028, 0.76)
+	modal_backdrop.position = Vector2.ZERO
+	modal_backdrop.size = Vector2(1280, 720)
+	modal_backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	ui.add_child(modal_backdrop)
 	setup_home()
 	setup_build()
 	pause_panel = panel_at(Rect2(400, 220, 480, 260))
@@ -643,30 +712,59 @@ func setup_ui() -> void:
 	inventory_panel.visible = false
 
 func setup_home() -> void:
-	home_panel = panel_at(Rect2(180, 165, 920, 520))
+	home_panel = panel_at(Rect2(115, 65, 1050, 590))
 	var box = stack(home_panel)
-	box.add_child(make_label("营地整备 / 补给与建设", 27, GOLD))
+	var header = HBoxContainer.new()
+	header.add_theme_constant_override("separation", 22)
+	box.add_child(header)
+	header.add_child(make_label("余烬营地", 36, GOLD))
+	header.add_child(make_label("EMBER CAMP  /  营地行动中心", 17, MUTED))
+	var line = HSeparator.new()
+	box.add_child(line)
+	var columns = HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 34)
+	box.add_child(columns)
+	var left = stack(columns)
+	left.add_theme_constant_override("separation", 6)
+	left.custom_minimum_size.x = 345
+	left.add_child(make_label("荒野之外，留一盏灯。", 25, INK))
+	left.add_child(make_label("搜寻物资，选择营址。\n守住防线，让营地继续生长。", 19, MUTED))
+	var enter = button("出发 · 进入大世界", close_home, left, 345)
+	enter.custom_minimum_size.y = 70
+	enter.add_theme_stylebox_override("normal", style_box(Color("bd945c"), Color("e4bd80")))
+	enter.add_theme_color_override("font_color", Color("15221e"))
+	button("建设营地与布置防线", func(): close_home(); toggle_build(), left, 345)
+	left.add_child(make_label("触屏操作", 20, GOLD))
+	left.add_child(make_label("左下拖动：移动\n右下按住开火：自动瞄准\n靠近补给箱：点击搜索\n回营后按住撤离：物资入库", 19, INK))
+	var right = stack(columns)
+	right.add_theme_constant_override("separation", 6)
+	right.custom_minimum_size.x = 625
+	right.add_child(make_label("整备与补给", 23, GOLD))
 	home_text = make_label("", 17)
 	home_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	home_text.custom_minimum_size = Vector2(880, 85)
-	box.add_child(home_text)
+	home_text.custom_minimum_size = Vector2(625, 133)
+	right.add_child(home_text)
+	var grid = GridContainer.new()
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", 10)
+	grid.add_theme_constant_override("v_separation", 10)
+	right.add_child(grid)
+	button("弹药补给", func(): notify("补充 24 发" if state.resupply() else "弹药包不足或备弹已充足"); refresh_home(), grid, 250)
+	button("治疗与止血", func(): use_medicine(); refresh_home(), grid, 250)
+	button("进食", func(): eat_food(); refresh_home(), grid, 250)
+	button("修复营地", func(): var error = state.repair_all(); notify("设施已修复" if error == "" else error); refresh_home(), grid, 250)
 	var row = HBoxContainer.new()
-	box.add_child(row)
-	button("弹药补给", func(): notify("补充 24 发" if state.resupply() else "弹药包不足或备弹已充足"); refresh_home(), row)
-	button("治疗", func(): use_medicine(); refresh_home(), row)
-	button("进食", func(): eat_food(); refresh_home(), row)
-	button("修复营地", func(): var error = state.repair_all(); notify("设施已修复" if error == "" else error); refresh_home(), row)
-	var row2 = HBoxContainer.new()
-	box.add_child(row2)
-	button("休息至次日", rest_day, row2, 150)
-	button("布防演练", func(): close_home(); start_raid(), row2, 150)
-	button("建造与扩建", func(): close_home(); toggle_build(), row2, 150)
-	button("进入大世界", close_home, row2, 170)
-	button("装载建营包 · 木材8 / 废金属6 / 罐头2", func(): var error = state.load_building_kit(); notify("建营物资已装入背包，前往远处扎营" if error == "" else error); refresh_home(), box)
-	box.add_child(make_label("可先外出勘探，点击「扎营」将核心放在身前；首次建造或入库会锁定营址。\n外出：寻找补给箱 → 搜索 → 返回核心 → 按住撤离入库\nWASD 移动 · 鼠标瞄准 · F 搜索 · R 换弹 · V 近战 · B 建造\n手机：左下拖动移动，右下按住开火；扎营建前哨，营地查看运输", 16, MUTED))
+	right.add_child(row)
+	button("休息至次日", rest_day, row, 250)
+	button("布防演练", func(): close_home(); start_raid(), row, 250)
+	button("装载前哨建营包 · 18.4 kg", func(): var error = state.load_building_kit(); notify("建营物资已装入背包，前往远处扎营" if error == "" else error); refresh_home(), right, 510)
+	box.add_child(make_label("先探索，再扎营  /  首次建造或撤离入库将锁定营址  /  离线时营地不会遭到攻击", 16, MUTED))
 
 func refresh_home() -> void:
-	home_text.text = "仓库：" + describe_items(state.stash) + "\n核心耐久 %d / 600  ·  建筑 %d  ·  领地半径 %d\n炮台每 24 发消耗 1 个弹药包；发电机每 120 秒消耗 1 份燃料。" % [state.structures[state.core_key()].hp, state.structures.size(), state.claim_radius()]
+	var stock_a = {"wood": state.stash.get("wood", 0), "scrap": state.stash.get("scrap", 0), "cloth": state.stash.get("cloth", 0), "food": state.stash.get("food", 0)}
+	var stock_b = {"med": state.stash.get("med", 0), "ammo": state.stash.get("ammo", 0), "fuel": state.stash.get("fuel", 0)}
+	home_text.text = "第 %d 天  ·  %s\n%s\n%s\n核心 %d / 600  ·  设施 %d  ·  领地 %d\n炮台：1 弹药包 / 24 发    发电机：1 燃料 / 120 秒" % [state.day, state.camps[state.active_camp].name, describe_items(stock_a), describe_items(stock_b), state.structures[state.core_key()].hp, state.structures.size(), state.claim_radius()]
+
 	state.save_game()
 
 func open_home() -> void:
@@ -790,13 +888,15 @@ func update_hud() -> void:
 
 func _draw() -> void:
 	var view = Rect2(camera_pos - Vector2(700, 420), Vector2(1400, 840))
-	# Subtle tiled ground; generation and visible draw counts remain bounded.
 	var start = Vector2i(floori(view.position.x / 64), floori(view.position.y / 64))
-	for x in range(23):
-		for y in range(15):
-			var cell = start + Vector2i(x, y)
-			var tone = (str(cell).hash() % 9) * 0.002
-			draw_rect(Rect2(screen(Vector2(cell) * 64), Vector2(64, 64)), Color(0.105 + tone, 0.15 + tone, 0.14 + tone))
+	# Painterly terrain is tiled in world coordinates to avoid texture swimming.
+	if ground_texture != null:
+		var tile_start = Vector2i(floori(view.position.x / 512), floori(view.position.y / 512))
+		for x in range(4):
+			for y in range(3):
+				draw_texture_rect(ground_texture, Rect2(screen(Vector2(tile_start + Vector2i(x, y)) * 512), Vector2(513, 513)), false, Color(0.65, 0.72, 0.68))
+	else:
+		draw_rect(Rect2(Vector2.ZERO, Vector2(1280, 720)), Color("293b32"))
 	# Roads give generated space a recognizable traversal network.
 	for key in chunks:
 		var origin = Vector2(state.key_cell(key)) * Rules.CHUNK
@@ -811,9 +911,13 @@ func _draw() -> void:
 				draw_rect(Rect2(pos - obstacle.size / 2, obstacle.size), Color("56625d"))
 				draw_rect(Rect2(pos - obstacle.size / 2 + Vector2(5, 5), obstacle.size - Vector2(10, 10)), Color("374841"))
 			else:
-				draw_circle(pos, 24, Color("263e35"))
-				draw_circle(pos + Vector2(-4, -5), 17, Color("405547"))
-				draw_line(pos + Vector2(0, -10), pos + Vector2(0, 18), Color("68745a"), 4)
+				if tree_texture != null:
+					draw_circle(pos + Vector2(12, 18), 44, Color(0, 0, 0, 0.15))
+					var tint = Color(0.8, 0.91, 0.83) if int(obstacle.type) == 0 else Color(0.93, 0.87, 0.72)
+					draw_texture_rect(tree_texture, Rect2(pos - Vector2(55, 63), Vector2(110, 126)), false, tint)
+				else:
+					draw_circle(pos, 24, Color("405547"))
+
 		for entry in chunks[key].loot:
 			if int(state.opened.get(entry.id, 0)) >= int(entry.qty) or not view.has_point(entry.pos):
 				continue
@@ -823,9 +927,10 @@ func _draw() -> void:
 			draw_rect(Rect2(pos - Vector2(15, 11), Vector2(30, 22)), GOLD, false, 2)
 			draw_line(pos - Vector2(0, 10), pos + Vector2(0, 10), GOLD, 3)
 			if entry.pos.distance_to(state.position) < 100:
-				draw_string(font, pos + Vector2(-38, -30), "搜索 · F", HORIZONTAL_ALIGNMENT_LEFT, -1, 17, GOLD)
+				draw_string(font, pos + Vector2(-38, -30), "搜索补给", HORIZONTAL_ALIGNMENT_LEFT, -1, 17, GOLD)
 	var core = screen(state.camp_origin())
-	draw_arc(core, state.claim_radius(), 0, TAU, 96, Color(0.65, 0.8, 0.55, 0.18), 2)
+	if build_mode:
+		draw_arc(core, state.claim_radius(), 0, TAU, 96, Color(0.65, 0.8, 0.55, 0.3), 2)
 	draw_arc(core, 200, 0, TAU, 72, Color(0.65, 0.8, 0.55, 0.25), 2)
 	if build_mode:
 		for x in range(23):
@@ -851,7 +956,12 @@ func _draw() -> void:
 		draw_rect(Rect2(pos - Vector2(26, 26), Vector2(52, 52)), Color("283e39"))
 		draw_rect(Rect2(pos - Vector2(26, 26), Vector2(52, 52)), color, false, 2)
 		if kind == "core":
-			draw_circle(pos, 14, GOLD)
+			# Gentle concentric amber light keeps the refuge readable in the forest.
+			for glow in range(5, 0, -1):
+				draw_circle(pos, 16 + glow * 14, Color(0.95, 0.59, 0.22, 0.025))
+			draw_colored_polygon(PackedVector2Array([pos + Vector2(-25, 20), pos + Vector2(0, -23), pos + Vector2(25, 20)]), Color("bd9b65"))
+			draw_colored_polygon(PackedVector2Array([pos + Vector2(-7, 20), pos + Vector2(0, -4), pos + Vector2(8, 20)]), Color("3b342a"))
+			draw_circle(pos + Vector2(0, 27), 6, GOLD)
 			draw_line(pos + Vector2(-20, 18), pos + Vector2(20, 18), GOLD, 3)
 		elif kind == "turret":
 			draw_circle(pos, 13, color)

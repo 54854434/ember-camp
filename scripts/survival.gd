@@ -4,6 +4,8 @@ extends RefCounted
 const WorldGenerator = preload("res://scripts/world_generator.gd")
 const CELL = 64.0
 const CHUNK = WorldGenerator.CHUNK
+const SaveValidator = preload("res://scripts/save_validator.gd")
+const SaveRepository = preload("res://scripts/save_repository.gd")
 const SAVE_VERSION = 1
 const SAVE_PATH = "user://camp_v1.json"
 const ITEMS = {
@@ -54,6 +56,8 @@ var camps: Dictionary = {}
 var convoys: Array = []
 var convoy_serial = 0
 var save_error = ""
+var load_notice = ""
+var blocked_save_path = ""
 
 func _init() -> void:
 	structures["0,0"] = {"kind": "core", "hp": 600.0, "camp_id": active_camp}
@@ -261,35 +265,28 @@ func snapshot() -> Dictionary:
 		"raid_active": raid_active, "raid_wave": raid_wave,
 		"generator_seconds": generator_seconds, "turret_rounds": turret_rounds,
 		"camp_cell": [camp_cell.x, camp_cell.y], "site_locked": site_locked,
-		"active_camp": active_camp, "camps": camps, "convoys": convoys, "convoy_serial": convoy_serial}
+		"active_camp": active_camp, "camps": camps, "convoys": convoys, "convoy_serial": convoy_serial}.duplicate(true)
 
 func restore(data: Dictionary) -> bool:
-	if int(data.get("version", -1)) != SAVE_VERSION:
+	var candidate = SaveValidator.validate(data, ITEMS, BLUEPRINTS)
+	if not candidate.ok:
+		save_error = candidate.error
 		return false
-	for property in ["day", "stash", "bag", "structures", "opened", "dead", "hp", "stamina", "hunger", "bleeding", "magazine", "reserve", "kills", "expeditions", "threat", "outside", "raid_active", "raid_wave"]:
-		if not data.has(property):
-			return false
-	var saved_camp = data.get("camp_cell", [0, 0])
-	var restored_camp = Vector2i(int(saved_camp[0]), int(saved_camp[1]))
-	if not data.get("structures", {}).has(cell_key(restored_camp)) or not data.has("position"):
-		return false
-	world_seed = int(data.get("seed", 54854434))
-	for property in ["day", "stash", "bag", "structures", "opened", "dead", "hp", "stamina", "hunger", "bleeding", "magazine", "reserve", "kills", "expeditions", "threat", "outside", "raid_active", "raid_wave"]:
+	_commit_candidate(candidate.data)
+	save_error = ""
+	return true
+
+func _commit_candidate(data: Dictionary) -> void:
+	# All shapes/references have been validated and detached before any assignment.
+	world_seed = int(data.seed)
+	for property in ["day", "magazine", "reserve", "kills", "expeditions", "raid_wave", "convoy_serial"]:
+		set(property, int(data[property]))
+	for property in ["hp", "stamina", "hunger"]:
+		set(property, float(data[property]))
+	for property in ["bag", "structures", "opened", "dead", "bleeding", "outside", "raid_active", "site_locked", "camps", "convoys"]:
 		set(property, data[property])
 	position = Vector2(float(data.position[0]), float(data.position[1]))
-	camp_cell = restored_camp
-	site_locked = bool(data.get("site_locked", false))
-	active_camp = str(data.get("active_camp", "camp_0"))
-	camps = data.get("camps", {active_camp: {"name": "主营地", "cell": [camp_cell.x, camp_cell.y], "stock": stash, "threat": threat}})
-	if not camps.has(active_camp):
-		return false
-	stash = camps[active_camp].stock
-	convoys = data.get("convoys", [])
-	convoy_serial = int(data.get("convoy_serial", 0))
-	# v1 saves used global counters; migrate those only into the saved active camp.
-	generator_seconds = float(camps[active_camp].get("generator_seconds", data.get("generator_seconds", 0)))
-	turret_rounds = int(camps[active_camp].get("turret_rounds", data.get("turret_rounds", 0)))
-	return true
+	_activate_camp(data.active_camp)
 
 func _store_active_camp() -> void:
 	camps[active_camp].stock = stash
@@ -308,28 +305,33 @@ func _activate_camp(id: String) -> void:
 	turret_rounds = int(camps[id].get("turret_rounds", 0))
 
 func save_game(path: String = SAVE_PATH) -> bool:
-	# Write-then-rename, with previous complete file retained as a backup.
-	var file = FileAccess.open(path + ".tmp", FileAccess.WRITE)
-	if file == null:
-		save_error = "无法写入存档"
+	if blocked_save_path == ProjectSettings.globalize_path(path):
+		save_error = "主档与备份均无法读取；已停止覆盖，请先保留并修复存档"
 		return false
-	file.store_string(JSON.stringify(snapshot()))
-	file.close()
-	if FileAccess.file_exists(path):
-		DirAccess.copy_absolute(path, path + ".bak")
-	var error = DirAccess.rename_absolute(path + ".tmp", path)
-	save_error = "" if error == OK else "保存失败，请检查空间"
-	return error == OK
+	save_error = SaveRepository.save(path, snapshot(), ITEMS, BLUEPRINTS)
+	return save_error == ""
 
 func load_game(path: String = SAVE_PATH) -> bool:
-	for candidate in [path, path + ".bak"]:
-		if FileAccess.file_exists(candidate):
-			var parser = JSON.new()
-			if parser.parse(FileAccess.get_file_as_string(candidate)) != OK:
-				continue
-			var data = parser.data
-			if data is Dictionary and restore(data):
-				return true
+	load_notice = ""
+	var errors: Array[String] = []
+	for candidate_path in [path, path + ".bak"]:
+		if not FileAccess.file_exists(candidate_path):
+			continue
+		var candidate = SaveRepository.read_candidate(candidate_path, ITEMS, BLUEPRINTS)
+		if candidate.ok:
+			_commit_candidate(candidate.data)
+			blocked_save_path = ""
+			save_error = ""
+			if candidate_path != path:
+				load_notice = "主存档不可用，已从上次备份恢复；可能缺少最近一次进度"
+			return true
+		errors.append(("主档：" if candidate_path == path else "备份：") + candidate.error)
+	if errors.is_empty():
+		save_error = ""
+		return false # First launch has no files and is allowed to save normally.
+	blocked_save_path = ProjectSettings.globalize_path(path)
+	save_error = "读档失败；原文件已保留，停止覆盖。" + "；".join(errors)
+	load_notice = save_error
 	return false
 
 func load_building_kit() -> String:
@@ -419,3 +421,4 @@ func update_convoys(dt: float) -> Array:
 		messages.append("运输队抵达%s%s" % [camps[convoy.target].name, "，遇袭损失部分货物" if convoy.ambush else "，货物已入当地仓库"])
 		convoys.erase(convoy)
 	return messages
+

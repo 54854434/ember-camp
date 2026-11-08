@@ -9,7 +9,8 @@ flowchart TD
     Main["Main：场景组合与模拟"] --> Touch["TouchRouter：设备输入"]
     Main --> State["Survival：规则与持久状态"]
     State --> Generator["WorldGenerator v1"]
-    State --> Save["v1 JSON与备份"]
+    State --> Validator["SaveValidator：候选校验与迁移"]
+    State --> Save["SaveRepository：文件与备份"]
 ```
 
 | 文件 | 实际责任 | 约束 |
@@ -18,6 +19,8 @@ flowchart TD
 | `scripts/main.gd` | 组合、世界加载、碰撞、战斗/尸潮更新、建造占用检查、UI和绘制 | 仍是主要技术债，不在此继续堆大批新子系统 |
 | `scripts/touch_router.gd` | 按钮注册/注销、每指捕获、按住、取消、模态筛选 | 不读写营地或库存；通过既有按钮信号交给业务 |
 | `scripts/survival.gd` | 物品/蓝图、材料交易、营地、运单、角色、保存恢复 | `stash`与局部计时为当前营地的运行别名，切换必须经过封装方法 |
+| `scripts/save_validator.gd` | 纯候选校验、v1迁移、营地/建筑/运单关联校验 | 不修改运行状态、不访问文件；返回深拷贝候选 |
+| `scripts/save_repository.gd` | JSON读写、临时文件回读、有效备份、错误处理 | 不负责修改游戏状态，损坏主档不污染备份 |
 | `scripts/world_generator.gd` | 固定种子/坐标的v1静态地形、容器、游荡者生成 | 无场景、库存或文件IO；不改变旧v1随机序列 |
 | `scripts/check_project.py` | 引擎导入与统一隔离检查 | 当前只支持Linux；与CI相同 |
 | `scripts/fetch_font.py` | 固定提交的字体与OFL下载 | 字体文件下载后导入，二进制不入Git |
@@ -56,7 +59,9 @@ flowchart TD
 
 ## 保存与兼容
 
-文件仍为`user://camp_v1.json`，SAVE_VERSION=1。写`.tmp`、尝试复制`.bak`、重命名替换；读取失败时尝试备份。当前不足是完整类型/范围/关联校验以及恢复原子性，列为下一项P0。
+文件仍为`user://camp_v1.json`，SAVE_VERSION=1。SaveValidator先校验全部候选（类型、数值范围、已知物品、营地核心/归属、运单端点等），迁移后由Survival一次提交；失败只更新错误信息。snapshot与restore均不共享外部嵌套引用。
+
+SaveRepository写`.tmp`并flush/回读校验；只有有效旧主档才复制至`.bak.tmp`，校验后替换`.bak`，最后替换主档。复制、回读或替换失败返回错误。加载按主档→备份尝试；备份恢复提示可能回退一次保存。两者均无效时保持当前状态并阻止同一路径保存，原文件留待恢复。首次启动无文件允许正常保存。详见[SAVE_FORMAT.md](SAVE_FORMAT.md)。不是fsync目录日志或跨平台断电零丢失保证。
 
 本轮营地局部计时兼容读取旧全局字段：只把旧值迁移给保存时的活跃营地；旧的非活跃营地缺少计时字段时从0开始。新增camp字段不需要清空旧v1存档。
 
@@ -66,7 +71,7 @@ flowchart TD
 
 | 模块 | 应拥有的状态/行为 | 对外接口方向 |
 |---|---|---|
-| SaveRepository + SaveValidator | 文件IO、候选数据校验、迁移、事务提交、备份策略 | load_candidate / validate / commit / save |
+| SaveRepository + SaveValidator（已存在，继续演进） | JSON文件IO、候选校验、v1迁移、备份策略 | read_candidate / validate / _commit_candidate / save |
 | WorldStreamer + WorldOccupancy | 活动块、实体驻留、空间查询、建造占用、区域修改记录 | query / reserve / release / load_region |
 | ConstructionController | 选格、蓝图预览、施工请求 | 校验通过后只提交一次材料交易与占用变化 |
 | CombatSystem | 射击、弹药、伤害、生命、战斗事件 | 输入命令进入，事件供HUD与声画消费 |
@@ -81,3 +86,8 @@ flowchart TD
 当前Compatibility渲染、有限活动分块、有上限的尸潮；没有真实设备帧率数据。画面包括首轮生成地表/树木及程序绘图，仍缺角色/建筑/动画/声音统一。先用实际设备数据确定空间索引、AI tick和画面档位，再考虑对象池或更复杂渲染。
 
 不申请联网权限，不上传存档/遥测。工程当前无GLoot、Voxel Tools等native模块；这些只是曾调研的候选，不是实际依赖。官方Godot为MIT，Noto字体为OFL，生成美术说明与提示词见`ART_DIRECTION.md`。
+
+
+## 演进原则
+
+模块表与路线图可随更好的方案和实测调整；用户已授权主动优化。不要为旧设计维持无价值的抽象；保留兼容边界并用测试证明行为。变更记录写入DECISIONS，状态与队列同步更新。

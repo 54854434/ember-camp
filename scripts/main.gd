@@ -83,7 +83,9 @@ func _ready() -> void:
 	open_home()
 	paused = false
 	pause_panel.visible = false
-	if intro:
+	if state.load_notice != "":
+		notify(state.load_notice, 12)
+	elif intro:
 		notify("欢迎来到余烬营地。先在营地整备，再向外探索。", 7)
 	set_process(true)
 
@@ -1024,3 +1026,4 @@ func open_logistics() -> void:
 	box.add_child(make_label("运费：燃料1 / 罐头1 / 护卫弹药包1\n每座营地独立库存；抵达核心附近点搜索切换当地管理。", 14, MUTED))
 	button("返回世界", func(): inventory_panel.visible = false; menu_open = false, box)
 	inventory_panel.visible = true
+

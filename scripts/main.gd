@@ -1,6 +1,8 @@
 extends Node2D
 ## Presentation and live simulation. Gameplay rules live in Survival.
 const Rules = preload("res://scripts/survival.gd")
+const Occupancy = preload("res://scripts/world_occupancy.gd")
+const Construction = preload("res://scripts/construction_controller.gd")
 const TouchRouter = preload("res://scripts/touch_router.gd")
 const INK = Color("d8e2d4")
 const MUTED = Color("8a9c96")
@@ -269,29 +271,7 @@ func move_actor(pos: Vector2, motion: Vector2, radius: float) -> Vector2:
 	return result
 
 func solid_at(pos: Vector2, radius: float) -> bool:
-	for x in range(-1, 2):
-		for y in range(-1, 2):
-			var cell = state.cell_at(pos) + Vector2i(x, y)
-			var key = state.cell_key(cell)
-			if not state.structures.has(key):
-				continue
-			var kind: String = state.structures[key].kind
-			if kind == "gate" and state.structures[key].get("open", false):
-				continue
-			if kind != "core" and kind != "gate" and not Rules.BLUEPRINTS[kind].solid:
-				continue
-			if Rect2(state.cell_position(cell) - Vector2(27, 27), Vector2(54, 54)).grow(radius).has_point(pos):
-				return true
-	var chunk = Vector2i(floori(pos.x / Rules.CHUNK), floori(pos.y / Rules.CHUNK))
-	for x in range(-1, 2):
-		for y in range(-1, 2):
-			var key = state.cell_key(chunk + Vector2i(x, y))
-			if not chunks.has(key):
-				continue
-			for obstacle in chunks[key].obstacles:
-				if Rect2(obstacle.pos - obstacle.size / 2, obstacle.size).grow(radius).has_point(pos):
-					return true
-	return false
+	return Occupancy.solid_at(state, pos, radius, chunks)
 
 func update_enemies(dt: float) -> void:
 	for id in enemies.keys():
@@ -456,7 +436,10 @@ func interact() -> void:
 			break
 	for key in state.structures:
 		if state.structures[key].kind == "gate" and state.cell_position(state.key_cell(key)).distance_to(state.position) < 90:
-			state.structures[key].open = not state.structures[key].get("open", false)
+			var error = Construction.toggle_gate(state, state.key_cell(key), enemies)
+			if error != "":
+				notify(error)
+				return
 			state.save_game()
 			notify("营地门已打开" if state.structures[key].open else "营地门已关闭")
 			return
@@ -518,18 +501,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func place_at(pos: Vector2) -> void:
 	var cell = state.cell_at(pos)
-	if state.position.distance_to(state.cell_position(cell)) > 480:
-		notify("请靠近施工区域（480 范围内）")
-		return
-	var result = ""
-	if dismantling:
-		result = state.dismantle(cell)
-	elif solid_at(state.cell_position(cell), 26):
-		result = "地面被障碍物占用"
-	elif nearest_enemy(state.cell_position(cell), 65) != "":
-		result = "敌人正在占据这个位置"
-	else:
-		result = state.build(selected, cell)
+	var result = Construction.dismantle(state, cell) if dismantling else Construction.build(state, selected, cell, chunks, enemies)
 	if result != "":
 		notify(result)
 	else:
@@ -986,11 +958,7 @@ func settle_here() -> void:
 	if paused or menu_open or build_mode:
 		return
 	var cell = state.cell_at(state.position + aim * 128)
-	var site = state.cell_position(cell)
-	if solid_at(site, 65) or nearest_enemy(site, 220) != "":
-		notify("此处障碍或敌人过近，请寻找有防守空间的地点")
-		return
-	var error = state.found_outpost(cell) if state.site_locked else state.settle(cell)
+	var error = Construction.settle(state, cell, chunks, enemies)
 	if error != "":
 		notify(error)
 		return

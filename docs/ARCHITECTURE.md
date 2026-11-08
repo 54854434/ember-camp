@@ -8,6 +8,10 @@
 flowchart TD
     Main["Main：场景组合与模拟"] --> Touch["TouchRouter：设备输入"]
     Main --> State["Survival：规则与持久状态"]
+    Main --> Construction["ConstructionController：施工命令"]
+    Construction --> Occupancy["WorldOccupancy：占用查询"]
+    Construction --> State
+    Main --> Occupancy
     State --> Generator["WorldGenerator v1"]
     State --> Validator["SaveValidator：候选校验与迁移"]
     State --> Save["SaveRepository：文件与备份"]
@@ -16,7 +20,9 @@ flowchart TD
 | 文件 | 实际责任 | 约束 |
 |---|---|---|
 | `scenes/main.tscn` | 主场景入口 | 保留当前启动路径 |
-| `scripts/main.gd` | 组合、世界加载、碰撞、战斗/尸潮更新、建造占用检查、UI和绘制 | 仍是主要技术债，不在此继续堆大批新子系统 |
+| `scripts/main.gd` | 组合、世界加载、碰撞、战斗/尸潮更新、调用施工命令、UI和绘制 | 仍是主要技术债，不在此继续堆大批新子系统 |
+| `scripts/construction_controller.gd` | 场景建造、拆除、扎营与门开关的同步命令入口 | 规则和世界校验全部通过后才提交；预览不扣材料、执行重新校验 |
+| `scripts/world_occupancy.gd` | 共享建筑碰撞、天然障碍、施工占用、门口角色检查 | 读取实时structures/chunks，不维护第二份易失效占用缓存 |
 | `scripts/touch_router.gd` | 按钮注册/注销、每指捕获、按住、取消、模态筛选 | 不读写营地或库存；通过既有按钮信号交给业务 |
 | `scripts/survival.gd` | 物品/蓝图、材料交易、营地、运单、角色、保存恢复 | `stash`与局部计时为当前营地的运行别名，切换必须经过封装方法 |
 | `scripts/save_validator.gd` | 纯候选校验、v1迁移、营地/建筑/运单关联校验 | 不修改运行状态、不访问文件；返回深拷贝候选 |
@@ -72,8 +78,8 @@ SaveRepository写`.tmp`并flush/回读校验；只有有效旧主档才复制至
 | 模块 | 应拥有的状态/行为 | 对外接口方向 |
 |---|---|---|
 | SaveRepository + SaveValidator（已存在，继续演进） | JSON文件IO、候选校验、v1迁移、备份策略 | read_candidate / validate / _commit_candidate / save |
-| WorldStreamer + WorldOccupancy | 活动块、实体驻留、空间查询、建造占用、区域修改记录 | query / reserve / release / load_region |
-| ConstructionController | 选格、蓝图预览、施工请求 | 校验通过后只提交一次材料交易与占用变化 |
+| WorldStreamer（待拆分）+ WorldOccupancy（已有查询） | 活动块、实体驻留、区域修改记录；空间查询已有，未引入完整索引 | solid_at / placement_error；后续按实测增加索引 |
+| ConstructionController（已存在） | 施工请求及预览错误查询；选格UI仍在Main | build_error / build / dismantle / settle / toggle_gate |
 | CombatSystem | 射击、弹药、伤害、生命、战斗事件 | 输入命令进入，事件供HUD与声画消费 |
 | SiegeDirector | 预警、组合、进攻方向、波次与结果 | 依赖世界查询和战斗，不直接改UI |
 | CampNetwork + Logistics | 地方库存、产能、运力、运单、调拨/未来贸易 | 明确所有权、在途账本、只结算一次 |
@@ -91,3 +97,9 @@ SaveRepository写`.tmp`并flush/回读校验；只有有效旧主档才复制至
 ## 演进原则
 
 模块表与路线图可随更好的方案和实测调整；用户已授权主动优化。不要为旧设计维持无价值的抽象；保留兼容边界并用测试证明行为。变更记录写入DECISIONS，状态与队列同步更新。
+
+## 施工与占用边界（2026-11-08）
+
+场景只通过ConstructionController提交施工/拆除/扎营/门开关，规则层保留低层材料与营地事务API供命令层和隔离测试调用。执行时重新检查距离、规则、地形和敌人，所有检查通过后同步提交，无await。WorldOccupancy读取唯一structures；门开关、拆除、摧毁、恢复和核心迁移立即改变后续查询，无额外缓存失效步骤。通行与建造占用分开：打开的门、可走过的尖刺仍保留施工格。
+
+建筑碰撞维持54×54，玩家/敌人碰撞半径沿用18/15，施工距离480、普通施工敌人距离65、扎营地形缓冲65和敌人距离220。缺失块仅为施工查询静态地形，不加载实体或改变生成v1。门关闭前检查门框内玩家和敌人，拒绝把单位夹进实体。详见[CONSTRUCTION.md](CONSTRUCTION.md)。这不等于完成丧尸全局寻路或可达性证明。

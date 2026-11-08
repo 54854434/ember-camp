@@ -13,6 +13,7 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 TESTS = (
+    ("tests/test_construction.gd", r"BUILD CHECKS: \d+ passed, 0 failed"),
     ("tests/test_save.gd", r"SAVE CHECKS: \d+ passed, 0 failed"),
     ("tests/test_rules.gd", r"RULE CHECKS: \d+ passed, 0 failed"),
     ("tests/test_world_generation.gd", r"WORLD CHECKS: \d+ passed, 0 failed"),

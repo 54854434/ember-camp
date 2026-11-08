@@ -182,6 +182,14 @@ func dismantle(cell: Vector2i) -> String:
 	structures.erase(key)
 	return ""
 
+func toggle_gate(cell: Vector2i) -> String:
+	# Low-level rule; scene commands enforce physical reach and actor clearance.
+	var key = cell_key(cell)
+	if not structures.has(key) or structures[key].kind != "gate":
+		return "这里没有营地门"
+	structures[key].open = not structures[key].get("open", false)
+	return ""
+
 func damage_structure(key: String, amount: float) -> bool:
 	if not structures.has(key):
 		return false

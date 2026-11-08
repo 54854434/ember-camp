@@ -116,7 +116,13 @@ func _init() -> void:
 	var healthy_bytes = FileAccess.get_file_as_string(path)
 	DirAccess.make_dir_absolute(path + ".bak.tmp")
 	protected.stash.food = 14
-	check(not protected.save_game(path), "backup copy failure is reported")
+	# DirAccess intentionally logs an engine error for this injected IO failure.
+	# Mute only that synchronous call; assertions and all other errors stay strict.
+	var error_output = Engine.print_error_messages
+	Engine.print_error_messages = false
+	var copy_failed = not protected.save_game(path)
+	Engine.print_error_messages = error_output
+	check(copy_failed, "backup copy failure is reported")
 	check(FileAccess.get_file_as_string(path) == healthy_bytes, "copy failure leaves primary intact")
 	DirAccess.remove_absolute(path + ".bak.tmp")
 	for suffix in ["", ".bak", ".tmp", ".bak.tmp"]:

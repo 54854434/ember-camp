@@ -62,3 +62,12 @@ godot --headless --path . --export-debug Android build/ember-camp-debug.apk
 ## 每批提交清单
 
 代码与必要测试 → 统一检查 → 实际界面变更时桌面渲染 → 状态/路线图/已知问题/CHANGELOG → 提交GitHub → 核对CI。若暂时无法完成某一步，准确记录阻塞与接续命令，不把待完成项标记为完成。
+
+
+## 2026-11-08 恢复与验证记录
+
+GitHub插件已恢复54854434/ember-camp的读写；可通过Git树/内容接口恢复源码并提交，无需依赖网页登录。私有仓库权限以实际读取为准，404不等于仓库被删除。不要公开仓库或提交凭据来恢复访问。
+
+旧`godotengine/godot/releases`下载地址在本地与CI #6返回504。CI改用Godot官方归档的downloads.godotengine.org入口，继续固定4.4.1标准版及同版本Android模板。下载成功不代表测试通过，必须核对引擎版本、统一检查、导出与签名步骤。
+
+新增`test_save.gd`的150项检查。复制失败用临时目录占位注入，Godot底层预期会记录ERROR；该测试仅在同步故障调用期间关闭Engine.print_error_messages，立即恢复后再断言返回失败与旧主档不变。其他测试与检查器继续严格拒绝引擎错误，不给全局日志加忽略规则。

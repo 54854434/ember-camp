@@ -71,3 +71,5 @@ GitHub插件已恢复54854434/ember-camp的读写；可通过Git树/内容接口
 旧`godotengine/godot/releases`下载地址在本地与CI #6返回504。CI改用Godot官方归档的downloads.godotengine.org入口，继续固定4.4.1标准版及同版本Android模板。下载成功不代表测试通过，必须核对引擎版本、统一检查、导出与签名步骤。
 
 新增`test_save.gd`的150项检查。复制失败用临时目录占位注入，Godot底层预期会记录ERROR；该测试仅在同步故障调用期间关闭Engine.print_error_messages，立即恢复后再断言返回失败与旧主档不变。其他测试与检查器继续严格拒绝引擎错误，不给全局日志加忽略规则。
+
+本批已核对CI #7（代码提交`568d81d7dc6f23d5492f0f28a6c62950256142fe`）：150存档+68规则+12世界+29触屏，场景、APK导出与签名均成功。后续文档收尾使用skip ci，不改变验证过的代码与构建配置；接手时按此代码SHA与运行记录核对。

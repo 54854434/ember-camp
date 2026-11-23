@@ -10,6 +10,7 @@ description: 为 ComfyUI MiniMax H3 编写、增强和排查视频提示词，�
 - 使用 [H3 官方结构与 1160 输入](references/h3-formats.md) 选择格式及核对六字段的职责。用户的现用 1160 用本地分段封装；原生节点按所选模式输入正文。
 - 做人物造型、白底三视图、面部或场景道具参考前，查阅[参考素材与连续性](references/reference-assets.md)。
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
+- 需要跨导演和模型排查成片、用户反馈缺少具体依据，或要跟踪多轮调整时，用[短视频制作统筹](../short-video-supervisor/SKILL.md)记录版本、时间码证据和下一轮单变量试验。
 - 动作编排、机位和声音需要重做，或用户要借鉴 Seedance 的提示词增强时，先用[视频动作与视听调度](../video-scene-direction/SKILL.md)做有接点的时间表，再转换为当前 H3 正文。
 - 用户希望把 Seedance 的实拍、动漫、国风或其他画面表现用在 H3 时，用[样片拆解与风格迁移](../video-scene-direction/references/visual-style-transfer.md)提取视觉特征并安排短镜头对比。
 - 做运镜、切镜、表演情绪、背景动作或四步提示词增强时，查阅[镜头设计与提示词增强](references/shot-enhancement.md)。逐镜交付可粘贴正文；需要做对照时，说明唯一改变的因素及怎么判断。

@@ -32,6 +32,7 @@ description: 为抖音、B 站做原创短视频、单元剧与连载短剧的�
 
 ## 按需查阅
 
+- 做跨技能制作、导演意图到模型提示词的交接，或按实片复核多轮改动时，用[短视频制作统筹](../short-video-supervisor/SKILL.md)明确镜头目标和验收证据。
 - 写舞蹈、奇幻战斗、近距离交互或精确卡拍时，用[视频动作与视听调度](../video-scene-direction/SKILL.md)设计动作、机位、切点与声音，然后交给目标模型或剪辑。
 - 查运镜、景别、正反打、轴线或切镜的应用时，直接用[拍摄与剪辑技法速查](references/camera-and-editing.md)。按岗位查编剧、美术、场记、声音、运营等术语时，用[视频制作术语与应用](references/production-terms.md)。
 - 从点子写剧本、审稿、改戏或排系列各集时，查阅[编剧开发与审稿](references/screenwriting.md)。先确定观众要理解的变化和人物造成的结果，再展开对白或分镜。

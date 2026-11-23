@@ -32,6 +32,7 @@ description: 为抖音、B 站做原创短视频、单元剧与连载短剧的�
 
 ## 按需查阅
 
+- 查运镜、景别、正反打、轴线或切镜的应用时，直接用[拍摄与剪辑技法速查](references/camera-and-editing.md)。按岗位查编剧、美术、场记、声音、运营等术语时，用[视频制作术语与应用](references/production-terms.md)。
 - 从点子写剧本、审稿、改戏或排系列各集时，查阅[编剧开发与审稿](references/screenwriting.md)。先确定观众要理解的变化和人物造成的结果，再展开对白或分镜。
 - 从剧本做导演方案、分镜、预演，或看片决定该补哪一镜时，查阅[导演分镜与审片](references/directing.md)。交接给 H3 时保留镜头要传达的信息、视角、表演和可观察的验收条件。
 - 从生成素材拼粗剪、处理声音和字幕、导出双平台版本，或根据国内平台后台找下一集的改动时，查阅[后期交付与平台复盘](references/postproduction-and-review.md)。

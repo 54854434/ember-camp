@@ -6,7 +6,7 @@
 
 | 交付给谁 | 怎么写 |
 | --- | --- |
-| 本机 MiniMax H3 | 借用 Seedance 的明确指代、时序分镜和同步声写法，正文采用目标 H3 模式。当前 1160 纯文本用 `integrated_multimodal_description`、`overall_soundscape`、`non_diegetic_music` 三字段。有实际参考素材的 Ref2VA 用六字段，根据 1160 的接线决定是否需外层分段和调度块。见 [H3 格式与本地封装](../../h3-visual-prompting/references/h3-formats.md) |
+| 本机 MiniMax H3 | 借用 Seedance 的明确指代、事件时序和同步声写法。以官方英文示例作为默认格式。纯文本 T2VA 的第一行用 `integrated_multimodal_description: [Shot 1] ...`，后接声景和配乐两个字段。单镜头内用自然语言排动作时序，实际切镜才用新镜号和时间。Ref2VA 用六字段，1160 分段和调度按实际接线添加。见 [H3 格式与本地封装](../../h3-visual-prompting/references/h3-formats.md) |
 | Seedance 2.x | 用自然语言先概述主体、场景、动作和画面风格，再按时间段交代构图、表演、机位和事件声，最后写贯穿全片的声音与画面特征。参考图、视频和音频按实际入口绑定。 [Seedance 2.0 官方指南](https://docs.volcengine.com/docs/ark/seedance-2-0-prompt-guide?lang=zh&redirect=1) · [Seedance 2.5 官方指南](https://console.volcengine.com/ark/region%3Acn-beijing/docs/seedance-2-5-prompt-guide) |
 
 双版本从同一份人物、空间、画幅、时长、动作顺序和声画设计导出。逐项确认目标、事件与结果对应。纯文字模式省略所有虚构的素材编号。默认交付本机所需版本。用户要求两版时，分别提供可独立粘贴的正文。

@@ -1,15 +1,7 @@
-integrated_multimodal_description:
-[Shot 1] 10 秒，9:16，单个连续镜头。风暴黄昏，写实奇幻。画面左侧是深蓝色海面与低矮防波墙，中间是穿深色短披风的女人，右侧是关着的铁闸。铁闸后有一盏暖黄色提灯，灯旁能看见一名避难者的剪影。湿石板反射微弱暖光。
+integrated_multimodal_description: [Shot 1] Live-action cinematic fantasy at a stormy seawall at dusk, framed vertically in a knee-up medium shot. The dark blue sea and a low stone barrier fill the left. A woman in a short dark cloak stands in the center. A closed iron gate is on the right, with an amber lantern and the silhouette of a person taking shelter behind it. Damp stone reflects the lantern.
 
-摄影机在堤面内侧，从女人斜前方朝右持续横移约一米。机位约在胸口高度，始终保持膝上中景，女人、左侧防波墙和右侧铁闸同时留在画内。近处的栏杆立柱明显向画面左侧滑动，远处的灯塔挪动得更慢。镜头移动持续到尾帧。
+From chest height on the inner side of the seawall, the camera trucks slowly to the right for about one meter throughout the ten-second shot, keeping the woman, the barrier and the gate in frame. A near railing post slides left faster than the distant lighthouse. In the opening seconds the iron gate rattles lightly in the wind, and the woman turns her head toward the lantern. About two seconds in, she takes a half step toward the sea, bends her knees and raises the sword across her chest between the barrier and the gate. Her profile and both hands remain in view. Around five seconds in, a wave hits the outside of the seawall with a heavy crash. A white sheet of spray rises behind her on the left, outside the wall, with the woman and gate still visible. About seven seconds in, the spray falls back into the sea. She lowers the sword slightly and holds her position. The camera continues right, ending on her profile and the closed gate with the amber lantern still lit.
 
-0–2 秒：女人听到右侧铁闸被风吹得轻响，侧头看了一眼。闸内暖灯照出避难者的剪影。
-2–5 秒：女人朝左侧海面跨半步，挡在防波墙和铁闸之间。她面向外海，屈膝站稳，双手把长剑横在胸前。侧脸和握剑的双手保持入画。
-5–7 秒：一道浪从画面左侧撞上防波墙外壁，白色水幕从女人的左后方竖起。撞击声在浪触墙时响起，水幕留在堤外，女人和铁闸的轮廓依然清楚。
-7–10 秒：白色水幕沿墙外落回海里。女人仍挡在门前，稍稍放低长剑。镜头继续横移，尾帧保留女人的侧脸和关着的铁闸，闸内提灯仍亮。
+overall_soundscape: Low wind and distant surf continue throughout. The gate rattles once, followed by a brief scrape of a boot on wet stone. A heavy crash sounds when the wave hits the barrier, followed by water running down the outside of the wall.
 
-overall_soundscape:
-持续低风声和远处的海浪声。开头有一下轻微的铁闸振动声，女人跨步时鞋底与湿石板短促摩擦。浪触墙的瞬间出现厚重的撞浪声，随后听见水沿墙外落回海里。无对白。
-
-non_diegetic_music:
-低音量弦乐缓慢蓄势，撞浪前短暂停一下。撞击由海浪声承担，尾段低弦轻轻回归。
+non_diegetic_music: Sustained low strings at a soft volume. They pause just before the wave hits and return softly as the water falls away.

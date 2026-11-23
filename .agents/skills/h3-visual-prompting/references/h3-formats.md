@@ -5,7 +5,7 @@
 | 模式 | 使用条件 | 写法 |
 | --- | --- | --- |
 | Ref2VA / R2V | 用实际加载的图片、视频或音频传递人物、场景、构图、动作或音色 | 六字段；说明每份参考负责什么，在实际生效的镜头再次引用 |
-| T2VA | ComfyUI 原生文生音视频工作流，无图像锚点 | 三字段，正文从 `integrated_multimodal_description:` 起 |
+| T2VA | 纯文字生成音视频，未使用参考图片、视频或音频 | 三字段，模型正文第一行采用 `integrated_multimodal_description: [Shot 1] ...` |
 | I2VA | 原生首帧工作流，输入的是实际开场构图 | 官方首帧对齐句、空行、三字段；从图中可见状态接到后续动作 |
 | FL2VA | 原生首尾帧工作流，确切掌握开场和最后画面 | 官方首尾帧对齐句、空行、三字段；写初态、中间动作和如何自然到达末态 |
 | L2VA | 原生尾帧工作流，用尾图约束结果 | 官方尾帧对齐句、空行、三字段；推导合理初态，逐步收束到尾图 |
@@ -26,6 +26,15 @@
 有参考才绑定对应来源。普通身份参考可写进 `<Subject N>` 的定义；图本身承担首帧、构图或多格分镜时，再单列 `<Picture N>` 并标出用到的镜头或面板。视觉关联可用 `fully_preserved`、`partially_preserved`、`attribute_transfer`、`weak_reference`。音频标记根据需求选 `fully_copy`、`partially_copy`、`reference` 或 `weak_reference`。参考音色时把本镜实际台词写清楚。 [MiniMax 官方全参考指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md)
 
 按官方格式交付时，描述正文写英文，对白和可见文字保留原语言。Ref2VA 的风格开场放在 `[Shot 1]` 前；基础模式写入 `[Shot 1]`。第一镜从片头开始；后续镜头才加递增的切点，如 `[Shot 2] At 00:04.250, cut to an insert of the loose hinge.`。对白使用稳定的 `(S1)`、`(S2)`，台词写成 `<d>[Chinese] 你准备好了吗?</d>`，说话人和语气写在标签外。画外音说明嘴唇保持闭合；跨镜台词按官方 `<scenetrans>` 处理。 [ComfyUI 提示词与镜头规则](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-prompt-guide)
+
+## 交付前审查官方正文
+
+- **T2VA** 按官方示例排版，三个字段在各自的行内开始填写。第一行把 `[Shot 1]` 紧接在 `integrated_multimodal_description:` 后，先写画风和起始构图，再按动作顺序叙述。需要给单镜头内的动作定时间时，用叙述中的近似秒数。实际切镜另起递增的 `[Shot N]`，用单一的 `At MM:SS.mmm` 写切点。Seedance 的时间段可作为导演稿，转成 H3 正文时依真实镜头数量组织。
+- **Ref2VA** 按上表的顺序保留六字段。最后核对素材槽位、编号、引用作用和保留标记，明确素材在哪一镜起效。
+- **语言** 默认英文模型正文，交付时的说明可用中文。对白和画内文字保留原文。用户明确要求中文模型正文时，可交付同字段的中文适配版。
+- **声音** 将事件声和对白写到发生的镜头内，`overall_soundscape` 概括整段环境和拟音，完整静音时使用 `N/A`。无画外配乐时写 `non_diegetic_music: N/A`。
+
+可直接粘贴的 10 秒悬疑示例见[门缝里的钥匙](examples/door-key-t2va.txt)。[格式检查器](../scripts/check_h3_prompt.py)可从该技能目录运行。输入是 T2VA 或 Ref2VA 的模型正文，例如 `python scripts/check_h3_prompt.py references/examples/door-key-t2va.txt --mode t2va --duration 10`。它检查字段、镜头编号和切点，语言与实际素材关系由交付审查核对。 [MiniMax 官方基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)
 
 ## 适配本机 1160
 

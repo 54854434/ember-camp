@@ -1,0 +1,7 @@
+integrated_multimodal_description: [Shot 1] Live-action cinematic suspense, a low medium shot in a vertical frame. A woman in a charcoal coat crouches to the right of a closed apartment door. Cool hallway light outlines her profile, and a thin line of warm light falls across the wooden floor beneath the door. The camera trucks slowly to the right throughout the shot. A nearby wall edge clears the frame, revealing the full gap beneath the door.
+
+A faint click behind the door draws her gaze to the floor. A brass key slides out through the gap with a soft scrape and stops just short of her hand. She slowly reaches for it. The framing keeps her profile, her index finger and the key visible together. Near the seventh second, when her fingertip is still a finger's width away, the key jerks back through the gap with a brief metallic rasp. She holds her hand in place and lifts her eyes to the handle. The camera continues right as warm light remains visible beneath the closed door.
+
+overall_soundscape: Quiet hallway room tone under a faint click behind the door. A short metallic scrape accompanies the key emerging, followed by a sharper rasp as it slides back.
+
+non_diegetic_music: N/A

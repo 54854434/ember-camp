@@ -31,16 +31,19 @@
 
 - **T2VA** 按官方示例排版，三个字段在各自的行内开始填写。第一行把 `[Shot 1]` 紧接在 `integrated_multimodal_description:` 后，先写画风和起始构图，再按动作顺序叙述。需要给单镜头内的动作定时间时，用叙述中的近似秒数。实际切镜另起递增的 `[Shot N]`，用单一的 `At MM:SS.mmm` 写切点。Seedance 的时间段可作为导演稿，转成 H3 正文时依真实镜头数量组织。
 - **Ref2VA** 按上表的顺序保留六字段。最后核对素材槽位、编号、引用作用和保留标记，明确素材在哪一镜起效。
-- **语言** 默认英文模型正文，交付时的说明可用中文。对白和画内文字保留原文。用户明确要求中文模型正文时，可交付同字段的中文适配版。
+- **语言** 官方示例使用英文模型正文，说明可用中文。对白和画内文字保留原文。本机交付按下面的 1160 中文方案。
 - **声音** 将事件声和对白写到发生的镜头内，`overall_soundscape` 概括整段环境和拟音，完整静音时使用 `N/A`。无画外配乐时写 `non_diegetic_music: N/A`。
 
-可直接粘贴的 10 秒悬疑示例见[门缝里的钥匙](examples/door-key-t2va.txt)。[格式检查器](../scripts/check_h3_prompt.py)可从该技能目录运行。输入是 T2VA 或 Ref2VA 的模型正文，例如 `python scripts/check_h3_prompt.py references/examples/door-key-t2va.txt --mode t2va --duration 10`。它检查字段、镜头编号和切点，语言与实际素材关系由交付审查核对。 [MiniMax 官方基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)
+官方英文正文示例见[门缝里的钥匙](examples/door-key-t2va.txt)。[格式检查器](../scripts/check_h3_prompt.py)可从该技能目录运行，输入可以是正文或 1160 完整分段块。例如 `python scripts/check_h3_prompt.py references/examples/biscuit-1160.txt --mode t2va --duration 10`。它检查字段、镜号和切点，以及完整封装使用的分段标记和素材槽 JSON。语言与实际素材关系由交付审查核对。 [MiniMax 官方基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)
 
 ## 适配本机 1160
+
+此项目默认给可直接粘贴的完整中文分段块，从 `[SHOT_START]` 到 `[SHOT_END]`。标题、元数据值和描述正文写中文，英文键和标记照原样保留。纯文生视频用三字段，三组 `slots` 留空；使用参考素材时用六字段并填实际槽位。见[最后一块饼干 · 1160 中文文生示例](examples/biscuit-1160.txt)。
 
 本地检查时，现用 1160 为 **Ref2VA INT8 主模型 + Ref2V Turbo v0.1 4 步 LoRA**，穿透生成模式，4 步、CFG 1，默认 10 秒。INT8 表示主模型量化，4 步来自所用的加速方案。参考图通过实际素材调度绑定；1160 中的身份参考图仍按 Ref2VA 输入。需要原生首帧或首尾帧的精确接线时，选相应的原生节点和模型路径。 [ComfyUI 原生 R2V 与 Turbo 说明](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-native)
 
 - 原生节点粘贴模型正文。下面的 `[SHOT_START]`、`[SHOT_END]`、`===H3_PROMPT===` 与调度行是 1160 管理器读的外层。用户贴出的片段末尾有结束标记；整理成完整分段时补齐开头，使用真实换行。
+- 1160 穿透模式成功提取 `===H3_PROMPT===` 时，用提取出的正文生成。外层的标题、动作描述和画面说明可用来标记分镜，关键动作先后和接触条件应写进模型正文。
 - 穿透模式的单段正文可直接贴入中央提示词框。需要明确调度时，用下面的完整块；多段另核对管理器里实际分段数和时长。每个外层块是独立生成的一个视频段，正文内的 `[Shot N]` 是这段视频内部的镜头。
 - 图片、视频、音频分别放在相应槽位。图片槽位的实际绑定顺序决定 `<Picture 1>` 等编号。每段重算，早一个素材绑定失败会改变后续顺序；通过日志和实际素材核对。无参考时留空槽位并去掉虚构的 `<Picture N>` 等引用。带参考视频或音频的模板要核对该管理器的音轨配对；原生节点的音轨接线按其独立输入。
 - 下例假设已有角色A的兔子参考图和道具A的胡萝卜参考图。对首次只想测原来纯文字版本的人，可沿用原来的无图输入和中文正文，仅把待测背景动作加到原有镜头中。

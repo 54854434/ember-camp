@@ -1,6 +1,7 @@
-"""Check the structure of a MiniMax H3 T2VA or Ref2VA model prompt."""
+"""Check a MiniMax H3 model body or a complete 1160 prompt for T2VA or Ref2VA."""
 
 import argparse
+import json
 import math
 from pathlib import Path
 import re
@@ -23,6 +24,10 @@ FIELD_PATTERN = re.compile(
 )
 SHOT_PATTERN = re.compile(r"\[Shot (\d+)\]")
 CUT_PATTERN = re.compile(r"At (\d{2}):([0-5]\d)\.(\d{3})\b")
+SEGMENT_PATTERN = re.compile(r"(?ms)^\[SHOT_START\][ \t]*\n(.*?)^\[SHOT_END\][ \t]*$")
+SECTION_PATTERN = re.compile(r"(?m)^===([A-Z0-9_]+)===[ \t]*$")
+SECTIONS_1160 = ("H3_PROMPT", "SCENE_INSTRUCTION", "VIDEO_INSTRUCTION", "AUDIO_INSTRUCTION")
+SEGMENT_DURATION_PATTERN = re.compile(r"(?m)^\*\*时长\*\*:[ \t]*(\d+(?:\.\d+)?)[ \t]*秒[ \t]*$")
 
 
 def parse_fields(prompt, mode):
@@ -67,6 +72,48 @@ def check_shots(description, mode, duration):
     return len(shots)
 
 
+def check_1160_slots(section, raw_slots, mode):
+    try:
+        instruction = json.loads(raw_slots)
+    except json.JSONDecodeError as error:
+        raise ValueError(f"{section} must contain valid JSON: {error.msg}.") from error
+    slots = instruction.get("slots") if isinstance(instruction, dict) else None
+    if not isinstance(slots, list) or any(not isinstance(slot, str) for slot in slots):
+        raise ValueError(f"{section} needs a slots array containing strings.")
+    if mode == "t2va" and slots:
+        raise ValueError(f"{section} must have empty slots for a text-only segment.")
+
+
+def parse_1160_bodies(prompt, mode, duration):
+    bodies = []
+    previous_end = 0
+    for index, block in enumerate(SEGMENT_PATTERN.finditer(prompt), start=1):
+        content = block.group(1)
+        if prompt[previous_end:block.start()].strip() or "[SHOT_START]" in content:
+            raise ValueError(f"Unmatched segment markers around segment {index}.")
+        parts = SECTION_PATTERN.split(content)
+        if tuple(parts[1::2]) != SECTIONS_1160:
+            raise ValueError(f"Segment {index} needs sections in order: {', '.join(SECTIONS_1160)}.")
+        metadata, body, scene, video, audio = parts[::2]
+        declared = SEGMENT_DURATION_PATTERN.search(metadata)
+        if declared and duration is not None and float(declared.group(1)) != duration:
+            raise ValueError(f"Segment {index} lists {declared.group(1)}s, panel duration is {duration:g}s.")
+        for section, raw_slots in zip(SECTIONS_1160[1:], (scene, video, audio)):
+            check_1160_slots(section, raw_slots, mode)
+        bodies.append(body.strip())
+        previous_end = block.end()
+    if not bodies or prompt[previous_end:].strip():
+        raise ValueError("Match each [SHOT_START] with [SHOT_END].")
+    return bodies
+
+
+def check_body(prompt, mode, duration):
+    fields = parse_fields(prompt, mode)
+    if mode == "t2va" and re.search(r"<(?:Picture|Video|Audio) \d+>", prompt):
+        raise ValueError("T2VA uses a text-only body. Choose a reference mode for asset tags.")
+    return check_shots(fields[DESCRIPTION_FIELDS[mode]], mode, duration)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("prompt", type=Path)
@@ -77,13 +124,15 @@ def main():
         parser.error("--duration must be a positive number of seconds.")
     try:
         prompt = args.prompt.read_text(encoding="utf-8-sig").strip()
-        fields = parse_fields(prompt, args.mode)
-        if args.mode == "t2va" and re.search(r"<(?:Picture|Video|Audio) \d+>", prompt):
-            raise ValueError("T2VA uses a text-only body. Choose a reference mode for asset tags.")
-        shot_count = check_shots(fields[DESCRIPTION_FIELDS[args.mode]], args.mode, args.duration)
+        wrapped = prompt.startswith("[SHOT_START]")
+        bodies = parse_1160_bodies(prompt, args.mode, args.duration) if wrapped else [prompt]
+        shot_count = sum(check_body(body, args.mode, args.duration) for body in bodies)
     except (OSError, ValueError) as error:
         parser.error(str(error))
-    print(f"H3 {args.mode}: {len(fields)} fields, {shot_count} shot(s).")
+    print(
+        f"H3 {args.mode}: {len(bodies)} segment(s), {len(MODE_FIELDS[args.mode])} fields per segment, "
+        f"{shot_count} shot(s)."
+    )
 
 
 if __name__ == "__main__":

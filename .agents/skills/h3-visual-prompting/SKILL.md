@@ -12,6 +12,7 @@ description: 为 ComfyUI MiniMax H3 编写、增强和排查视频提示词，�
 - 做人物造型、白底三视图、面部或场景道具参考前，查阅[参考素材与连续性](references/reference-assets.md)。
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
 - 需要跨导演和模型排查成片、用户反馈缺少具体依据，或要跟踪多轮调整时，用[短视频制作统筹](../short-video-supervisor/SKILL.md)记录版本、时间码证据和下一轮单变量试验。
+- 动作先后、接触或运镜反复跑偏时，用[逐事件验收](../short-video-supervisor/references/event-validation.md)定义通过证据，再选择改正文、做关键帧预演或测试实际运动参考。
 - 动作编排、机位和声音需要重做，或用户要借鉴 Seedance 的提示词增强时，先用[视频动作与视听调度](../video-scene-direction/SKILL.md)做有接点的时间表，再转换为当前 H3 正文。
 - 用户同时要 H3 和 Seedance 时，用[提示词双版本交付](../short-video-supervisor/references/prompt-pair.md)复用同一分镜，按实际模型分别交付可粘贴正文。验证 H3 的提示词增强时，使用同一 H3 工作流进行对照。
 - 用户希望把 Seedance 的实拍、动漫、国风或其他画面表现用在 H3 时，用[样片拆解与风格迁移](../video-scene-direction/references/visual-style-transfer.md)提取视觉特征并安排短镜头对比。

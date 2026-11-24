@@ -9,6 +9,7 @@ description: 为 AI 短视频做动作指导、运镜切镜、风格迁移、音
 
 - 动作含糊、跳舞节拍乱、双人接不上或奇幻交锋缺少因果时，读[动作指导与编排](references/action-direction.md)。
 - 运镜、构图和换机位干扰动作，或需要做对话、舞蹈、战斗分镜时，读[摄影与切镜调度](references/camera-and-cutting.md)。
+- 用户给了详细样稿，或需要从首帧到收尾的长镜头设计、多空间动作、复杂转场时，读[电影镜头设计与提示词交付](references/cinematic-shot-plan.md)。用其画面、空间、轨迹和声音六部分组织导演稿，并按实际工作流输出。
 - 音乐与舞步对不上、动作没有冲击、对白被盖或跨镜声场断开时，读[音乐与音效指导](references/music-and-sound.md)。
 - 想把 Seedance 或其他样片的画面表现用到 H3，读[样片拆解与风格迁移](references/visual-style-transfer.md)，提取可观察的光影、构图、材质、表演节奏和摄影手法。
 - 需要增强提示词、借鉴 Seedance 或输出 1160 可用提示词时，读[Seedance 方法与提示词转换](references/prompt-enhancement.md)，按目标模型和真实绑定的素材交付。

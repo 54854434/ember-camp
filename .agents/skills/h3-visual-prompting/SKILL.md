@@ -16,4 +16,5 @@ description: 为 ComfyUI MiniMax H3 编写、增强和排查视频提示词，�
 - 用户同时要 H3 和 Seedance 时，用[提示词双版本交付](../short-video-supervisor/references/prompt-pair.md)复用同一分镜，按实际模型分别交付可粘贴正文。验证 H3 的提示词增强时，使用同一 H3 工作流进行对照。
 - 用户希望把 Seedance 的实拍、动漫、国风或其他画面表现用在 H3 时，用[样片拆解与风格迁移](../video-scene-direction/references/visual-style-transfer.md)提取视觉特征并安排短镜头对比。
 - 做运镜、切镜、表演情绪、背景动作或四步提示词增强时，查阅[镜头设计与提示词增强](references/shot-enhancement.md)。逐镜交付可粘贴正文；需要做对照时，说明唯一改变的因素及怎么判断。
+- 用户要求截图里的电影化详写、连续跟拍或多场景调度时，用[电影镜头设计与提示词交付](../video-scene-direction/references/cinematic-shot-plan.md)先对齐首帧、空间和动作接点，再把因果、机位轨迹和声音写进现有 H3 字段。仅在用户需要时附上导演稿。
 - 用户只要修背景、动作或运镜时，优先改镜头正文，保持素材映射、说话人和不相关字段。新增内容同时影响声景或引用关系时，再同步相应字段。区分官方结构、工作流接线要求和经验性改写。

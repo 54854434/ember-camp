@@ -1,0 +1,4 @@
+interface:
+  display_name: "DirectorDesk 白模预演与 H3 多参"
+  short_description: "从定稿制作本地白模工程与视频，并把运镜和走位接入 1160 多参"
+  default_prompt: "使用 $directordesk-h3-previs 根据我的剧本和分镜制作白模，并准备 1160 参考视频。"

@@ -12,6 +12,8 @@
 
 原生三字段是 `integrated_multimodal_description`、`overall_soundscape`、`non_diegetic_music`。I2VA、FL2VA、L2VA 的首行从官方原文取对应固定句，替换末镜编号和有效时长（如适用）。有效时长依实际帧数及节点行为确定，首尾图先按目标画幅准备。本机亦可在 `ComfyUI/custom_nodes/ComfyUI-JZL-MiniMax-H3/support_llama/presets/` 查阅对应的 `minimax_i2va.py`、`minimax_fl2va.py`、`minimax_l2va.py`。 [MiniMax 原生基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)
 
+原生固定句之后留一个空行，再进入三字段。I2VA 的首帧落在 `[Shot 1]` 的 0.00 秒。FL2VA 先设计首帧到尾帧的连续可行路径，默认单镜；指定多镜时，由实际末镜抵达尾帧。FL2VA 与 L2VA 用实际末镜编号和两位小数的有效时长。两种句子的 `Picture` 和 `Shot` 括号写法不同，按各自官方模板原样取用。
+
 ## Ref2VA 六字段分别负责什么
 
 导演六段式用于把实际参考素材和成片意图落进 Ref2VA 正文。动笔时先定观众会看见的过程和结果，再核对参考素材能承担哪些职责。输出严格按下表顺序。纯文生用 T2VA 三字段，同样做导演设计。
@@ -29,9 +31,13 @@
 
 视频的运镜、切镜与时间结构可以由独立的 `<Video N>` 描述。只借视频中某个主体的表演或动作时，写在对应主体的定义与动作里。视频和音频各自编号，只有实际启用的音轨才能引用 `<Audio N>`。只借音色就为目标角色写实际台词。复用录音时注明复用范围和生效时机。
 
+Ref2VA 的任务标记依据实际使用关系。`[video editing]` 适用于直接修改原视频，`[video continuation]` 适用于从它继续生成；只取拍法仍属 `[reference generation]`。直接复用已启用的声音信号用 `[audio reuse]`，只借音色、音质、节奏或延续感用 `[audio reference]`。多个目的组合时各写一次。视频文件内含声音但未实际接入音轨时，照实际输入写引用。
+
 检查正文是否可以从画面和声音验收。关键现场变化写明触发者、受影响的物件、可见过程与残留，并在下一镜接续。机位写明从何处出发、为何移动、最终露出什么。环境通篇持续的声音放进声景，接触音、对白及场内音乐在发生的镜头标出。英文官方指南给出的常规长度用于判断描述是否充分，镜头数量、对白和关键事件决定本机提示词实际写多细。 [MiniMax 官方提示词技能](https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/SKILL.md)
 
 按官方格式交付时，描述正文写英文，对白和可见文字保留原语言。Ref2VA 的风格开场放在 `[Shot 1]` 前；基础模式写入 `[Shot 1]`。第一镜从片头开始；后续镜头才加递增的切点，如 `[Shot 2] At 00:04.250, cut to an insert of the loose hinge.`。对白使用稳定的 `(S1)`、`(S2)`，台词写成 `<d>[Chinese] 你准备好了吗?</d>`，说话人和语气写在标签外。画外音说明嘴唇保持闭合；跨镜台词按官方 `<scenetrans>` 处理。 [ComfyUI 提示词与镜头规则](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-prompt-guide)
+
+说话、唱歌和独立旁白的编号按成片中首次发声顺序分配，同一个人跨镜复用，合说可写 `(S1,S2)`。Ref2VA 若在主体定义绑定目标角色音色，沿用成片的说话人编号。只有已复用的音轨里出现歌词、现场角色并未演唱时，用 `<Audio N>` 指明声源。跨镜延续同一句时，两段的连接处标 `<scenetrans>` 并说明声音连续。确因片尾截断的发声用 `<cutoff>`。官方英文画外音用 `says in an off-screen voiceover`，画面有对应角色时紧接对白写嘴唇闭合。实际要出现在画内的文字用英文双引号括起，保留原词和标点。
 
 ## 交付前审查官方正文
 

@@ -37,6 +37,8 @@
 
 做四格身份图时，三格全身共用脚底基线。第四格优先用正面头肩近照，保留头顶、发际线和完整下颌，底边收到锁骨或上胸，脸从发际到下颌占该格约六至七成高度。验收时按整张图缩小后的实际观感，确认眉眼、发际线和脸部轮廓仍能区分。需要上身姿态时可留到腰部，并优先扩大人像一栏。核对侧格为严格侧面，背格朝远离摄影机，服装、配饰所在侧和身体比例能够互证。作为 1160 身份素材时为每个人分别绑定一张四格图，主体定义说明前三格供体型、服装与轮廓，右侧近照供面部识别。整张图描述的是同一人，镜头正文仍写该人物实际只在对应位置出现一次，按故事环境构图。
 
+引用已有的不同排版时，按实际位置映射面部与全身，例如上方的头肩特写负责骨相、眼型、妆容和发际线，下方的全身视图负责体型、剪裁、配饰和发束轮廓。根据用户指定的主参考化解同一属性冲突。需要确定三维形体和材质方向时，参见[画面美术与角色渲染](../../video-scene-direction/references/look-design.md)。
+
 ```text
 A production turnaround sheet of the same character in three full-body views, arranged left to right: front, true left profile at 90 degrees, and back. Match the attached character reference: {face and hair}; {body proportions}; {wardrobe and shoes}; {asymmetric detail and its side}.
 Use a relaxed neutral standing pose and the same head and foot baselines in all three panels. Show complete hands, feet and hair silhouette. Orthographic-style presentation, consistent image scale, large neutral soft lighting, a clean pure white background, and wide separation between panels.

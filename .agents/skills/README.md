@@ -14,6 +14,20 @@
 
 制作调度台会先看题材、要求和素材，再从摄影、剪辑、动作、表演、美术、特效、声音与 H3 格式逐项检查需要用到的技法。终审只依据模型实际收到的文字和引用。若需要看到采用情况，可加「附终审摘要」，查看哪一镜采用了什么、修了什么。见[两轮调度与终审](short-video-supervisor/references/review-loop.md#两轮调度与终审)。
 
+## 五个技能如何协作
+
+同一条片共用一份镜头安排，按段与镜号记录必保留内容、可见变化、交付条件和待核对处。各入口沿用已有决定，按本次任务补需要的内容。
+
+| 环节 | 交接中要带什么 | 下一环节 |
+| --- | --- | --- |
+| [短视频制作](short-video-production/SKILL.md) | 原意、世界观、人物目的、锁定对白、开场和结果 | [导演增强](video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)选最贴合的具体拍法 |
+| [场面导演](video-scene-direction/SKILL.md) | 地标和站位、表演触发、镜头路径、背景变化、声场与切点 | [H3](h3-visual-prompting/SKILL.md)转成实际输入，需白模时同稿交预演 |
+| [DirectorDesk](directordesk-h3-previs/SKILL.md) | 按请求制作的机位、走位、动作时序或实播参考；标出有效段和承担的控制 | [H3 参考接入](directordesk-h3-previs/references/h3-handoff.md)，用真实素材和支持的入口绑定 |
+| [H3 视觉提示词](h3-visual-prompting/SKILL.md) | 对应模式的正文、实际调度槽、原文与可检验的镜头证据 | [调度台终审](short-video-supervisor/references/review-loop.md#两轮调度与终审)检查正片需要能看见或听见什么 |
+| [制作调度台](short-video-supervisor/SKILL.md) | 统一设计与终审，发现偏差时给对应专长、镜号、修订和复验条件 | 按用户所需交付 1160、双版本或预演，样片比对回到对应环节 |
+
+参考即梦效果时，用[同条件样片方法](short-video-supervisor/references/review-loop.md#比较一句话增强的收益)比较具体看点、节奏、运镜、表演与声画。新构思按场面补叙事和视听细节，已有样片按出现时间做局部校正。
+
 ## H3 与预演如何交接
 
 默认交付每段可粘贴的完整 1160 块。原定人物、画幅、时长、台词和已有参考素材照用。生成段内只有真正变化到另一镜头才写切点。同一镜头的推进、跟拍、动作先后和触发关系写进正文。
@@ -35,6 +49,7 @@
 | 半写实 3DCG、三渲二、真人电影、光色与衣发 | [画面美术与角色渲染](video-scene-direction/references/look-design.md) |
 | 气流、水浪、光效、材质破坏与连续余波 | [特效、材质与环境响应](video-scene-direction/references/vfx-design.md) |
 | 官方三字段、参考六字段、对白与素材标签 | [H3 官方结构和本机 1160](h3-visual-prompting/references/h3-formats.md) |
+| 多余人声、说完后的口型、招牌与屏幕原字 | [对白与静默控制](h3-visual-prompting/references/h3-formats.md#对白与静默控制) · [画内文字与可读性](h3-visual-prompting/references/h3-formats.md#画内文字与可读性) |
 | 拆解参考运镜、判断样片偏差、替换镜头 | [从参考推导路径与修正样片](video-scene-direction/references/camera-and-cutting.md#从参考推导路径与修正样片) |
 
 每个技能从自己的 `SKILL.md` 进入，按任务加载相邻 `references/`。维护时保持此目录与本机五个技能的相对位置一致。公开样稿用于提炼可复用的方法。实际模型字段、素材职责和时长依当前工作流核对。

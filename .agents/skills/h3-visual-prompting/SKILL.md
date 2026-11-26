@@ -17,7 +17,8 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 - 只有一句话、主题或开放想法时，按[一句话创意的自动增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)设计画面与关键动作，再转换为 H3 正文。留给模型发挥的细节可省略。用户要求原样、只排版或局部改动时，沿用指定范围。
 - 交付 T2VA 或 Ref2VA 文件时，可用[格式检查器](scripts/check_h3_prompt.py)核对模型字段、镜头切点以及 1160 分段标记和素材槽。
 - 做人物造型、白底三视图、系列人物资产包、面部或场景道具参考前，查阅[参考素材与连续性](references/reference-assets.md)。
-- 用户给出台词或对白录音时，用[对白时长与切镜](../video-scene-direction/references/music-and-sound.md#对白时长与切镜)核对每段是否装得下，再检查说话人、原文、口型和反应。
+- 有台词、需要保持静默、或样片出现额外人声时，用[对白与静默控制](references/h3-formats.md#对白与静默控制)核对原文、发声时点和声景。用[对白时长与切镜](../video-scene-direction/references/music-and-sound.md#对白时长与切镜)检查能否保住自然语速、换气与反应。
+- 镜头中有必须可读的招牌、道具屏幕或标识时，用[画内文字与可读性](references/h3-formats.md#画内文字与可读性)处理原字、载体、取景和失败后的参考或后期。
 - 场景跨镜漂移，或需要断裂、坍塌、烧蚀等持续变化时，先按[场景连续性与破坏](../video-scene-direction/references/action-direction.md#场景连续性与破坏)定地标、受击部位和残留状态，再把它们写进模型正文的首镜、接镜和尾帧。纯文字用 T2VA 三字段。将场景图绑定到 Ref2VA 时，用六字段写明参考职责和素材槽位。
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
 - 连续时空的多人切镜、换角度后人物或道具串位时，按[切点站位对齐](../video-scene-direction/references/performance-and-blocking.md#在切点对齐人物站位)在切前收幅和切后开幅写同一地标下的实际位置、朝向与动作阶段。机位变化从该状态连续接起。

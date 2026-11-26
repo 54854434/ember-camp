@@ -27,7 +27,7 @@
 | 末态与续接 | 指明最后停住、回摆、继续漂移或留下的损伤。相邻镜头从这个状态接下去。关键动件留在景别和焦域内，必要时保留可比较的固定参照 |
 
 - **区分动力来源。** 主体动作引发的环境响应写在对应动作后。独立的风、雨、机械等背景运动写自己的来源与起止。摄影机怎么走另写一句，便于区分真实的场景变化与取景变化。把拟音落在可见的触发帧或明确的后续事件上。
-- **精确写相对顺序，按需要写时间。** 用「接触后」「松手时」「落地后才」让事件顺序贴着画面走。同镜内部可加近似秒数辅助节奏，真实换镜沿用 H3 的切点格式。需要帧级控制时，通过已支持的参考或后期时间线约束。短段优先保住决定故事的一条主链，次要动态加在它的合适时机。 [火山方舟 Seedance 2.0 的分镜与动作描述](https://console.volcengine.com/ark/region:cn-beijing/docs/seedance-2-0-prompt-guide) · [Google DeepMind Veo 的复杂动作指南](https://deepmind.google/models/veo/prompt-guide/)
+- **精确写相对顺序。** 1160 单镜内部用「接触后」「松手时」「落地后才」让事件顺序贴着画面走。真实换镜用 H3 切点格式。需要帧级控制时，通过已支持的参考或后期时间线约束。短段优先保住决定故事的一条主链，次要动态加在它的合适时机。 [火山方舟 Seedance 2.0 的分镜与动作描述](https://console.volcengine.com/ark/region:cn-beijing/docs/seedance-2-0-prompt-guide) · [Google DeepMind Veo 的复杂动作指南](https://deepmind.google/models/veo/prompt-guide/)
 - **让参考约束各自的内容。** 场景图可提供布景和静态结构，运动参考可提供所需的轨迹或节奏，具备真实首尾帧输入时可用两张图表达初态与末态。Ref2VA 若把会改变的部件定义成参考对象，按定义写清哪些特征保留、哪些改变。新增动作本身不需降低外观保留等级。 [MiniMax H3 全参考指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md) · [阿里云万相的首尾帧指南](https://help.aliyun.com/zh/model-studio/wan3-video-generation-prompt-guide)
 
 ## 从审片结果选择下一次测试

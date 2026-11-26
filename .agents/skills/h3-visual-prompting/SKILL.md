@@ -9,6 +9,8 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 
 根据用户创意编写 MiniMax H3／ComfyUI 1160 时，默认只交付完整、可粘贴的 1160 提示词。内部按导演流程设计和审查站位、运镜、对白、动作与声音，把影响画面的细节写进模型正文。提示词按实际已有素材选择模式、填对应调度槽和引用。用户明确要求 DirectorDesk 分镜清单或白模预演交接时，再按 [DirectorDesk 交接格式](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)补充对应交付。
 
+凡是要设计镜头，包括用户只给一句话、只要提示词或直接调用本技能的情况，都从[按场面选择技法](../short-video-supervisor/references/review-loop.md#按场面选择技法)选取并读取相关技法，成稿后按同页审查模型实际会读到的正文。每种必要技法都要落实到一个可见或可听的变化。单镜、原样排版或局部改动按任务范围检查。
+
 - 使用 [H3 官方结构与 1160 输入](references/h3-formats.md) 选模式并审查交付。有实际图片、视频或音频参考且走 Ref2VA 时，按[导演六段式写法](references/h3-formats.md#ref2va-六字段分别负责什么)把素材职责、保留范围和逐镜执行对齐。此项目默认交付完整的 1160 中文分段块，字段名和调度键保留原样，保留原语言对白和画内文字。用户要官方正文或切换到原生节点时，按官方模板给英文正文。
 - 只有一句话、主题或开放想法时，按[一句话创意的自动增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)设计画面与关键动作，再转换为 H3 正文。留给模型发挥的细节可省略。用户要求原样、只排版或局部改动时，沿用指定范围。
 - 交付 T2VA 或 Ref2VA 文件时，可用[格式检查器](scripts/check_h3_prompt.py)核对模型字段、镜头切点以及 1160 分段标记和素材槽。
@@ -18,10 +20,7 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
 - 需要跨导演和模型排查成片、用户反馈缺少具体依据，或要跟踪多轮调整时，用[短视频制作统筹](../short-video-supervisor/SKILL.md)记录版本、时间码证据和下一轮单变量试验。
 - 动作先后、接触或运镜反复跑偏时，用[逐事件验收](../short-video-supervisor/references/event-validation.md)定义通过证据，再选择改正文、做关键帧预演或测试实际运动参考。
-- 已有分镜需要重做动作编排、机位或声音，或需要精确接镜时，用[视频动作与视听调度](../video-scene-direction/SKILL.md)核对时间表与接点，再转换为当前 H3 正文。
 - 用户同时要 H3 和 Seedance 时，用[提示词双版本交付](../short-video-supervisor/references/prompt-pair.md)复用同一分镜，按实际模型分别交付可粘贴正文。验证 H3 的提示词增强时，使用同一 H3 工作流进行对照。
 - 用户希望把 Seedance 的实拍、动漫、国风或其他画面表现用在 H3 时，用[样片拆解与风格迁移](../video-scene-direction/references/visual-style-transfer.md)提取视觉特征并安排短镜头对比。
 - 做主体外观、运镜、切镜、表演或四步提示词增强时，查阅[镜头设计与提示词增强](references/shot-enhancement.md)。角色或动物缺少辨识度时，按[主体外形写法](references/shot-enhancement.md#让主体外形在画面里可辨认)挑选能在目标景别看见的特征。道具交互和背景响应按[场景交互写法](references/shot-enhancement.md#把场景交互写进镜头正文)明确触发、运动与结果。
-- 用户要求截图里的电影化详写、连续跟拍或多场景调度时，用[电影镜头设计与提示词交付](../video-scene-direction/references/cinematic-shot-plan.md)先对齐首帧、空间和动作接点，再把因果、机位轨迹和声音写进现有 H3 字段。
-- 多主体、多场景或多层动态同时影响结果时，按[场面复杂度增加细节](../video-scene-direction/references/prompt-enhancement.md#根据场面复杂度增加细节)写足依赖关系、逐镜动作、环境反馈和状态衔接。一句话输入也可自动展开成复杂分镜。
 - 用户只要修背景、动作或运镜时，优先改镜头正文，保持素材映射、说话人和不相关字段。新增内容同时影响声景或引用关系时，再同步相应字段。区分官方结构、工作流接线要求和经验性改写。

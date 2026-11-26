@@ -14,16 +14,22 @@
 
 ## Ref2VA 六字段分别负责什么
 
+导演六段式用于把实际参考素材和成片意图落进 Ref2VA 正文。动笔时先定观众会看见的过程和结果，再核对参考素材能承担哪些职责。输出严格按下表顺序。纯文生用 T2VA 三字段，同样做导演设计。
+
 | 字段 | 放入的内容 |
 | --- | --- |
-| `subject_definitions` | 定义同一人物、场景或道具的身份及参考来源。例如一张图提供衣服和体态，另一张提供同一张脸。把它们合在一个 `<Subject N>` |
-| `summary` | 一小段确认任务类型和整段结果。参考重建常用 `[reference generation]`，具体画面锚点用 `[keyframe completion]`，可按实际关系组合 |
-| `retention_analysis` | 逐项声明参考出现位置、应保留的特征和允许改变的部分。参考兔子长相可完整保留；若胡萝卜的几何形状将被咬出缺口，可标 `partially_preserved` 并保留颜色、比例及萝卜叶 |
-| `detailed_description` | 按播放顺序写构图、人物、空间锚点、主动作、背景动作、镜头、同步声音与对白。背景物体何时开始动、如何动、最后怎样写在这里 |
+| `subject_definitions` | 每个需要追踪的内容各占一行，写清来源、可辨认特征和职责。同一角色的脸、衣服或动作来自不同素材时，合进一个 `<Subject N>`，逐份限定其作用 |
+| `summary` | 用一个短段概括目标、主要参考关系和镜头最终结果。开头用实际任务类型标记。参考视频只提供走位、机位或节奏时用 `[reference generation]`；实际帧锚点用 `[keyframe completion]`。存在多种任务关系时可用 `+` 组合 |
+| `retention_analysis` | 每个已定义标签对应一行，写清在哪一镜或哪一段生效、继承什么、允许改变什么。保留程度只针对已定义的职责。参考只负责身份时，新动作和新背景可以与身份的 `fully_preserved` 共存 |
+| `detailed_description` | 全片共用的画风与光线先写在 `[Shot 1]` 前。逐镜写当前构图、主体位置和姿势、场景地标、主动作及结果、跟随或揭示的机位、背景响应和当下的声音。在素材真正提供身份、构图、动作或声音的位置写回对应标签 |
 | `overall_soundscape` | 整段可听的环境底声、动作音效和非语言人声。安静环境也可有轻微底噪 |
 | `non_diegetic_music` | 观众听到的配乐。现场收音机、唱歌或角色听得到的音乐放到镜头正文。无配乐写 `N/A` |
 
 有参考才绑定对应来源。普通身份参考可写进 `<Subject N>` 的定义；图本身承担首帧、构图或多格分镜时，再单列 `<Picture N>` 并标出用到的镜头或面板。视觉关联可用 `fully_preserved`、`partially_preserved`、`attribute_transfer`、`weak_reference`。音频标记根据需求选 `fully_copy`、`partially_copy`、`reference` 或 `weak_reference`。参考音色时把本镜实际台词写清楚。 [MiniMax 官方全参考指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md)
+
+视频的运镜、切镜与时间结构可以由独立的 `<Video N>` 描述。只借视频中某个主体的表演或动作时，写在对应主体的定义与动作里。视频和音频各自编号，只有实际启用的音轨才能引用 `<Audio N>`。只借音色就为目标角色写实际台词。复用录音时注明复用范围和生效时机。
+
+检查正文是否可以从画面和声音验收。关键现场变化写明触发者、受影响的物件、可见过程与残留，并在下一镜接续。机位写明从何处出发、为何移动、最终露出什么。环境通篇持续的声音放进声景，接触音、对白及场内音乐在发生的镜头标出。英文官方指南给出的常规长度用于判断描述是否充分，镜头数量、对白和关键事件决定本机提示词实际写多细。 [MiniMax 官方提示词技能](https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/SKILL.md)
 
 按官方格式交付时，描述正文写英文，对白和可见文字保留原语言。Ref2VA 的风格开场放在 `[Shot 1]` 前；基础模式写入 `[Shot 1]`。第一镜从片头开始；后续镜头才加递增的切点，如 `[Shot 2] At 00:04.250, cut to an insert of the loose hinge.`。对白使用稳定的 `(S1)`、`(S2)`，台词写成 `<d>[Chinese] 你准备好了吗?</d>`，说话人和语气写在标签外。画外音说明嘴唇保持闭合；跨镜台词按官方 `<scenetrans>` 处理。 [ComfyUI 提示词与镜头规则](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-prompt-guide)
 

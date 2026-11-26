@@ -7,7 +7,7 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 
 先确定用户在做素材、分镜还是修某个镜头。核对实际模型、LoRA、模式、已绑定参考素材、每段时长和画幅。已明确的角色、场景、对白、画风及镜头意图作为改写约束。用户只是准备制作基础时，交付模板和检查项。
 
-根据用户创意编写 MiniMax H3／ComfyUI 1160 时，默认按 [DirectorDesk 交接格式](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)交付两部分，先给完整 1160 提示词，再给逐镜 DirectorDesk 分镜清单。两部分共用一套人物、画幅、时长、对白、场景地标与镜头顺序。白模尚未生成时，在分镜清单里说明它要控制的站位、走位、动作、机位或切镜。提示词按实际已有素材选择模式、填对应调度槽和引用。用户本轮指定只要某一部分时，按本轮要求交付。
+根据用户创意编写 MiniMax H3／ComfyUI 1160 时，默认只交付完整、可粘贴的 1160 提示词。内部按导演流程设计和审查站位、运镜、对白、动作与声音，把影响画面的细节写进模型正文。提示词按实际已有素材选择模式、填对应调度槽和引用。用户明确要求 DirectorDesk 分镜清单或白模预演交接时，再按 [DirectorDesk 交接格式](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)补充对应交付。
 
 - 使用 [H3 官方结构与 1160 输入](references/h3-formats.md) 选模式并审查交付。此项目默认交付完整的 1160 中文分段块，字段名和调度键保留原样，保留原语言对白和画内文字。用户要官方正文或切换到原生节点时，按官方模板给英文正文。
 - 只有一句话、主题或开放想法时，按[一句话创意的自动增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)设计画面与关键动作，再转换为 H3 正文。留给模型发挥的细节可省略。用户要求原样、只排版或局部改动时，沿用指定范围。
@@ -22,6 +22,6 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 - 用户同时要 H3 和 Seedance 时，用[提示词双版本交付](../short-video-supervisor/references/prompt-pair.md)复用同一分镜，按实际模型分别交付可粘贴正文。验证 H3 的提示词增强时，使用同一 H3 工作流进行对照。
 - 用户希望把 Seedance 的实拍、动漫、国风或其他画面表现用在 H3 时，用[样片拆解与风格迁移](../video-scene-direction/references/visual-style-transfer.md)提取视觉特征并安排短镜头对比。
 - 做主体外观、运镜、切镜、表演或四步提示词增强时，查阅[镜头设计与提示词增强](references/shot-enhancement.md)。角色或动物缺少辨识度时，按[主体外形写法](references/shot-enhancement.md#让主体外形在画面里可辨认)挑选能在目标景别看见的特征。道具交互和背景响应按[场景交互写法](references/shot-enhancement.md#把场景交互写进镜头正文)明确触发、运动与结果。
-- 用户要求截图里的电影化详写、连续跟拍或多场景调度时，用[电影镜头设计与提示词交付](../video-scene-direction/references/cinematic-shot-plan.md)先对齐首帧、空间和动作接点，再把因果、机位轨迹和声音写进现有 H3 字段及分镜清单。
+- 用户要求截图里的电影化详写、连续跟拍或多场景调度时，用[电影镜头设计与提示词交付](../video-scene-direction/references/cinematic-shot-plan.md)先对齐首帧、空间和动作接点，再把因果、机位轨迹和声音写进现有 H3 字段。
 - 多主体、多场景或多层动态同时影响结果时，按[场面复杂度增加细节](../video-scene-direction/references/prompt-enhancement.md#根据场面复杂度增加细节)写足依赖关系、逐镜动作、环境反馈和状态衔接。一句话输入也可自动展开成复杂分镜。
 - 用户只要修背景、动作或运镜时，优先改镜头正文，保持素材映射、说话人和不相关字段。新增内容同时影响声景或引用关系时，再同步相应字段。区分官方结构、工作流接线要求和经验性改写。

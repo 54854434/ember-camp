@@ -10,11 +10,13 @@
 | H3 1160 提示词、角色三视图和资产包、参考绑定 | `$h3-visual-prompting` | [H3 视觉提示词](h3-visual-prompting/SKILL.md) |
 | 白模工程、预演视频与 H3 视频参考接入 | `$directordesk-h3-previs` | [DirectorDesk 白模预演](directordesk-h3-previs/SKILL.md) |
 
-可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词和 DirectorDesk 分镜清单。`
+可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词。`
 
 ## H3 与预演如何交接
 
-默认先交付每段可粘贴的完整 1160 块，再交付逐镜 DirectorDesk 清单。原定人物、画幅、时长、台词和已有参考素材照用。生成段内只有真正变化到另一镜头才写切点。同一镜头的推进、跟拍、动作先后和触发关系写进正文。白模尚未生成时在清单写明要控制的内容，有实际素材后再按槽位绑定。
+默认交付每段可粘贴的完整 1160 块。原定人物、画幅、时长、台词和已有参考素材照用。生成段内只有真正变化到另一镜头才写切点。同一镜头的推进、跟拍、动作先后和触发关系写进正文。
+
+明确要求 DirectorDesk 清单或白模预演交接时，再附逐镜清单。白模尚未生成时在清单写明要控制的内容，有实际素材后再按槽位绑定。需要两项交付时，可在指令末尾加上「并附 DirectorDesk 分镜清单」。
 
 进阶入口依问题选择。[对白估时](video-scene-direction/references/music-and-sound.md#对白时长与切镜) · [人物走位](video-scene-direction/references/performance-and-blocking.md) · [摄影和剪接](video-scene-direction/references/camera-and-cutting.md) · [角色资产](h3-visual-prompting/references/reference-assets.md#角色资产包) · [逐事件验证](short-video-supervisor/references/event-validation.md)
 

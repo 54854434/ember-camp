@@ -20,6 +20,7 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 - 用户给出台词或对白录音时，用[对白时长与切镜](../video-scene-direction/references/music-and-sound.md#对白时长与切镜)核对每段是否装得下，再检查说话人、原文、口型和反应。
 - 场景跨镜漂移，或需要断裂、坍塌、烧蚀等持续变化时，先按[场景连续性与破坏](../video-scene-direction/references/action-direction.md#场景连续性与破坏)定地标、受击部位和残留状态，再把它们写进模型正文的首镜、接镜和尾帧。纯文字用 T2VA 三字段。将场景图绑定到 Ref2VA 时，用六字段写明参考职责和素材槽位。
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
+- 连续时空的多人切镜、换角度后人物或道具串位时，按[切点站位对齐](../video-scene-direction/references/performance-and-blocking.md#在切点对齐人物站位)在切前收幅和切后开幅写同一地标下的实际位置、朝向与动作阶段。机位变化从该状态连续接起。
 - 需要跨导演和模型排查成片、用户反馈缺少具体依据，或要跟踪多轮调整时，用[短视频制作统筹](../short-video-supervisor/SKILL.md)记录版本、时间码证据和下一轮单变量试验。
 - 动作先后、接触或运镜反复跑偏时，用[逐事件验收](../short-video-supervisor/references/event-validation.md)定义通过证据，再选择改正文、做关键帧预演或测试实际运动参考。
 - 用户同时要 H3 和 Seedance 时，用[提示词双版本交付](../short-video-supervisor/references/prompt-pair.md)复用同一分镜，按实际模型分别交付可粘贴正文。验证 H3 的提示词增强时，使用同一 H3 工作流进行对照。

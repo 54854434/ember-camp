@@ -9,7 +9,7 @@
 | 两人以上交锋、交接或换位 | [动作与局势变化](../../video-scene-direction/references/action-direction.md#高速动作与场面升级)、[人物走位](../../video-scene-direction/references/performance-and-blocking.md) | 起势有来路，回应有对象，结果改变双方距离、持物或通路。换位过程在画内，或者切前切后有同一动作或地标可接 |
 | 连续跟拍、关键揭晓或多镜剪接 | [摄影与切镜](../../video-scene-direction/references/camera-and-cutting.md)、[镜头技法与应用](../../short-video-production/references/camera-and-editing.md) | 机位起点、触发、路径和落幅可以推导。切后出现新的可读信息，保留足以接续的动作、视线、构图或声场 |
 | 异常光效、环境交互、局部破坏或大场面 | [特效与空间](../../video-scene-direction/references/cinematic-shot-plan.md#高密度动作与特效分镜)、[场景连续性](../../video-scene-direction/references/action-direction.md#场景连续性与破坏) | 能看见效果来源和传播。局部损伤有边界，整体规模有参照。触发、受影响的表面、残留状态和下一镜的证明都有对应画面 |
-| 真人表演、剧情对白或重要的听者反应 | [走位与真人表演](../../video-scene-direction/references/performance-and-blocking.md#让表演有具体的触发)、[对白时长](../../video-scene-direction/references/music-and-sound.md#对白时长与切镜) | 说话人、对白原文、出声与沉默正确。反应由具体事件触发，在相应景别可见 |
+| 真人表演、写真自拍、剧情对白或重要的听者反应 | [真人表演与写真质感](../../video-scene-direction/references/live-action-performance.md)、[对白时长](../../video-scene-direction/references/music-and-sound.md#对白时长与切镜) | 人物视线和表情由具体事件触发，在相应景别可见。光线和焦点保留可辨认的脸。说话人、对白原文、出声与沉默正确 |
 | 声音负责冲击、提示或跨镜衔接 | [声音与卡拍](../../video-scene-direction/references/music-and-sound.md) | 能找出声音开始的接触或事件，知道哪层延续、哪层该退下。需要对帧时把准确落点交给时间线 |
 | 角色、动物、道具或场景必须稳定 | [主体外形和场景交互](../../h3-visual-prompting/references/shot-enhancement.md)、[H3 素材职责](../../h3-visual-prompting/references/h3-formats.md) | 角色或场景在镜头里有稳定称呼和可见识别点。各参考对应实际素材，只继承它负责的特征 |
 

@@ -20,4 +20,15 @@
 
 进阶入口依问题选择。[导演技法选择与成稿审查](short-video-supervisor/references/review-loop.md#按场面选择技法) · [样稿拆解](video-scene-direction/references/visual-style-transfer.md#拆解结构化提示词与分镜样稿) · [对白估时](video-scene-direction/references/music-and-sound.md#对白时长与切镜) · [人物走位](video-scene-direction/references/performance-and-blocking.md) · [摄影和剪接](video-scene-direction/references/camera-and-cutting.md) · [角色资产](h3-visual-prompting/references/reference-assets.md#角色资产包) · [逐事件验证](short-video-supervisor/references/event-validation.md)
 
+## 按导演任务查阅
+
+| 任务 | 阅读位置 |
+| --- | --- |
+| 武打场面从剧本到攻守、强弱、分段 | [高速动作与场面升级](video-scene-direction/references/action-direction.md#高速动作与场面升级) |
+| 角色身份、三视图、表情和服装资产 | [完整角色资产总览](h3-visual-prompting/references/reference-assets.md#完整角色资产总览) |
+| 设计景别、焦点、镜头路径或特殊机位 | [摄影与切镜调度](video-scene-direction/references/camera-and-cutting.md) · [特殊机位、运动与时间效果](short-video-production/references/camera-and-editing.md#特殊机位运动与时间效果) |
+| 人物站位、走位、接镜和首帧 | [人物调度与首帧交接](video-scene-direction/references/performance-and-blocking.md) |
+| 真人表演、口型、朦胧写真和自拍 | [真人表演、口型与写真质感](video-scene-direction/references/live-action-performance.md) |
+| 拆解参考运镜、判断样片偏差、替换镜头 | [从参考推导路径与修正样片](video-scene-direction/references/camera-and-cutting.md#从参考推导路径与修正样片) |
+
 每个技能从自己的 `SKILL.md` 进入，按任务加载相邻 `references/`。维护时保持此目录与本机五个技能的相对位置一致。公开样稿用于提炼可复用的方法。实际模型字段、素材职责和时长依当前工作流核对。

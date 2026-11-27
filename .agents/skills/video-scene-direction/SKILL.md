@@ -16,10 +16,10 @@ description: 将一句话创意增强为视频分镜，设计人物站位与走�
 - 半写实 3DCG、三渲二或真人的质感与表演方式出现混用时，读[画面美术与角色渲染](references/look-design.md)。画面有可见冲击、水浪、气流、崩落或光效时，按[特效、材质与环境响应](references/vfx-design.md)落实主形、受力、声响和残留。
 - 对白原文需要排进固定时长时，读[对白时长与切镜](references/music-and-sound.md#对白时长与切镜)。卡拍、动作拟音和跨镜声场也在同一文档。
 - 想把 Seedance 或其他样片的画面表现用到 H3，读[样片拆解与风格迁移](references/visual-style-transfer.md)，提取可观察的光影、构图、材质、表演节奏和摄影手法。
-- 用户只给一句话或让模型发挥时，默认按[一句话创意的自动增强](references/prompt-enhancement.md#一句话创意的自动增强)设计，直接给目标模型可用的一版成稿。明确要求精确分镜或动作控制时，用同一指南的详细流程。
+- 用户只给一句话或让模型发挥时，按[一句话创意的自动增强](references/prompt-enhancement.md#一句话创意的自动增强)设计。要精确分镜或动作控制时按同页的详细流程。
 
 多镜头或精确卡点任务共用一张时间表，记录关键动作、机位、切点与声音。复杂场面或用户要求全程紧凑时，按[逐秒检查画面进程](references/prompt-enhancement.md#逐秒检查画面进程)把持续动作、留白、触发与结果贯穿到片尾。交付前按任务核对时长、连续性、左右关系、素材职责和声音触发。
 
 接到编剧稿时沿用人物动机、台词和结果，补观众实际看到的表演、机位、环境和声音。交给 H3 时附上在具体镜头生效的动作、可见细节及素材职责。需要工程预演时，从同一份镜头安排提取走位、朝向、运动和切点，见 [DirectorDesk 白模预演](../directordesk-h3-previs/SKILL.md)。
 
-需要交付模型提示词时，按[两轮调度与终审](../short-video-supervisor/references/review-loop.md#两轮调度与终审)读取相关专长、核对导演手法在实际模型正文中的证据。用户提供样稿用于学习时，按[结构化样稿拆解](references/visual-style-transfer.md#拆解结构化提示词与分镜样稿)提炼适用条件、执行与验证。
+直接从本入口交付模型提示词时，按[两轮调度与终审](../short-video-supervisor/references/review-loop.md#两轮调度与终审)核对成稿。同一任务由调度台统筹时，把设计证据交回它终审。用户提供样稿用于学习时，按[结构化样稿拆解](references/visual-style-transfer.md#拆解结构化提示词与分镜样稿)提炼方法与适用条件。

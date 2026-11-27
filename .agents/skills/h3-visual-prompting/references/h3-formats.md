@@ -62,7 +62,7 @@ Ref2VA 的任务标记依据实际使用关系。`[video editing]` 适用于直�
 
 ## 适配本机 1160
 
-此项目默认给可直接粘贴的完整中文分段块，从 `[SHOT_START]` 到 `[SHOT_END]`。标题、元数据值和描述正文写中文，英文键和标记照原样保留。纯文生视频用三字段，三组 `slots` 留空；使用参考素材时用六字段并填实际槽位。见[最后一块饼干 · 1160 中文文生示例](examples/biscuit-1160.txt)。
+此项目默认只给可直接粘贴的完整中文分段块，从 `[SHOT_START]` 到 `[SHOT_END]`。标题、元数据值和描述正文写中文，英文键和标记照原样保留。纯文生视频用三字段，三组 `slots` 留空；使用参考素材时用六字段并填实际槽位。用户明确需要时间表或 [DirectorDesk 预演清单](../../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)时再附相应内容。见[最后一块饼干 · 1160 中文文生示例](examples/biscuit-1160.txt)。
 
 本地检查时，现用 1160 为 **Ref2VA INT8 主模型 + Ref2V Turbo v0.1 4 步 LoRA**，穿透生成模式，4 步、CFG 1，默认 10 秒。INT8 表示主模型量化，4 步来自所用的加速方案。参考图通过实际素材调度绑定；1160 中的身份参考图仍按 Ref2VA 输入。需要原生首帧或首尾帧的精确接线时，选相应的原生节点和模型路径。 [ComfyUI 原生 R2V 与 Turbo 说明](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-native)
 

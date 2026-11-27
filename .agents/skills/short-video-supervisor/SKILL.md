@@ -1,22 +1,13 @@
 ---
 name: short-video-supervisor
-description: 统筹短视频编剧、导演、动作音效和模型提示词技能。用于把一句话创意增强为 MiniMax H3 提示词、借鉴 Seedance 的导演表达、同镜头交付双版本，以及按时间码审片和验证改动。
+description: 视频提示词制作调度台。把创意、剧本或参考素材转成 MiniMax H3／ComfyUI 1160 提示词，按场面调度编剧、摄影、剪辑、动作、表演、灯光、特效、声音和资产并终审。也用于 Seedance 双版本、样片复盘和检索国内外案例更新视频技能。
 ---
 
-# 短视频制作统筹
+# 视频提示词制作调度台
 
-围绕同一份分镜统筹已有技能，并负责最后一次审查与交付。只改局部时保留其余已确认的决定。根据创意为 H3 1160 写作时，默认按 [DirectorDesk 交接格式](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)交付完整提示词和分镜清单，一起核对角色、画幅、时长、切镜、动作顺序、对白和实际素材职责。
+调度台负责分派、合并、终审与复盘。各岗位沿用同一份镜头安排：编剧确定意图和结果，导演编排视听过程，H3 将它转入实际字段与素材槽。局部修改只动目标和受它影响的接点。
 
-用户只给概念或让模型发挥时，默认按[一句话创意的自动增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)走。先定观众会记住的画面或情绪，再适配模型格式。只把影响原意和关键交互的要求写精确，给其余细节留空间。下述完整分工用于明确分镜和需要跨技能审查的任务。
-
-## 分工与交付
-
-1. **确定观众要看见什么。** 锁定题材、角色、时长、画幅和输入模式。用[短视频制作](../short-video-production/SKILL.md)判断人物的目的、障碍、选择和结果。确定观众先看见什么，在哪一拍得到新信息，以及镜尾哪处状态发生变化。气氛镜头可用空间揭示或情绪变化作为目标。
-2. **把导演意图落实到镜头。** 用[动作与视听调度](../video-scene-direction/SKILL.md)选择人物站位、朝向、主动作、机位和声音。写出移动机位或切镜会改变哪些信息。对话、动作、场景揭示和反应同时争夺注意时，保住本镜最重要的信息，其他信息可放入后续镜头。
-   用户提供复杂提示词样稿或要求电影化详写时，先用[电影镜头设计](../video-scene-direction/references/cinematic-shot-plan.md)核对首帧、空间接点、机位连续性与声音落点。借鉴公开案例时记录来源和可验证范围，再把可迁移的调度用在用户场景。
-3. **交付模型能执行的正文。** 先选实际输入模式，再按 [H3 正文和 1160 交付规则](../h3-visual-prompting/references/h3-formats.md)审查语言、字段、镜头顺序、声音和封装。本机默认交付完整中文分段，官方英文正文按用户所选入口交付。Seedance 的素材分工和事件时序用来增强同一份导演稿。用户要 Seedance 或两版时，按[提示词双版本交付](references/prompt-pair.md)分别导出。所有版本按[提示词审查与成片反馈](references/review-loop.md)核对可见事件、空间和画框。
-4. **根据成片决定下一轮。** 用户提供成片或能确认工作区样片时，实际看片，记录时间码和对照证据。先区分导演、模型执行与后期问题，保留已有效的部分，只选一个最影响目标的因素做下一轮改动。未拿到对应片段时，记录文字审查和待验证项。已有成片的改动须复查后才标为改善。
-
-关键事件必须按顺序发生、需要先试拍难镜头，或用户要有效反馈时，提前按[逐事件审稿、预演与本机对照](references/event-validation.md)定义可观察的证据。复看时逐项给出结果。
-
-完整制作可保留一条镜头记录，包括要传达的信息、最终提示词、模型设置、样片或任务编号、证据、变更与复验结果。交付范围以用户本轮明确要求为准。统筹流程读各专长技能的相关内容并汇总交付。
+1. **选岗位并设计。** 新写、续写与改镜按[两轮调度与终审](references/review-loop.md#两轮调度与终审)分派。用[岗位如何做判断](../short-video-production/references/roles-and-handoffs.md#岗位如何做判断)决定各自要解决的画面或声音问题。遇到新技法、未知版本或反复偏差时，按[主动学习](../short-video-production/references/research-and-update.md#创作过程中如何主动学习)先查同类研究记录，再查证能改变本轮设计的问题。
+2. **按四阶段成稿并终审。** 新写或重写完整 H3 段时，按[H3 四阶段成稿](../video-scene-direction/references/prompt-enhancement.md#h3-四阶段成稿)实际写出创意稿、中文逐秒导演稿、中文模型执行稿和英文成稿，按[成稿倒查](references/review-loop.md#从成稿倒查镜头)核对每次转写。按[本机 1160 规则](../h3-visual-prompting/references/h3-formats.md#适配本机-1160)交付。需要 Seedance 或双版本时按[双版本交付](references/prompt-pair.md)，需要预演时按[DirectorDesk 交接](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)。
+3. **根据样片复盘。** 有对应成片时，从[样片反馈](references/review-loop.md#拿到样片后)进入。对顺序、接触或运镜等难镜头，提前用[逐事件验收](references/event-validation.md)确定实拍证据。遇到已有候选写法，按该条验收条件比较，记录版本、时间码和复验结果，供下次调用。
+4. **研究与维护。** 用户要求自主学习、研究资料或补全技能时，直接按[完成一轮学习](../short-video-production/references/research-and-update.md#完成一轮学习)执行，从最影响出片的问题取样。把候选、复验结果、采用或撤回理由落到[研究记录](../short-video-production/references/technique-findings.md)，达到采纳条件就更新负责该技法的技能。研究任务按证据和改动交付。

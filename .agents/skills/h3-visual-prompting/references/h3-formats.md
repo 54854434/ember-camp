@@ -55,7 +55,7 @@ Ref2VA 的任务标记依据实际使用关系。`[video editing]` 适用于直�
 
 - **T2VA** 按官方示例排版，三个字段在各自的行内开始填写。第一行把 `[Shot 1]` 紧接在 `integrated_multimodal_description:` 后，先写画风和起始构图，再按动作顺序叙述。1160 的单镜内用动作顺序和明确触发安排节奏。实际切镜另起递增的 `[Shot N]`，用单一的 `At MM:SS.mmm` 写切点。Seedance 的时间段可作为导演稿，转成 H3 正文时依真实镜头数量组织。
 - **Ref2VA** 按上表的顺序保留六字段。最后核对素材槽位、编号、引用作用和保留标记，明确素材在哪一镜起效。
-- **语言** 按[四阶段成稿](../../video-scene-direction/references/prompt-enhancement.md#h3-四阶段成稿)，以已核对的中文模型执行稿为依据写自然英文。逐项复核方向、起终点、持续状态与声音落点。对白、画内文字、角色或槽位需要精确匹配的名称保留原文。本机封装按下节交付。
+- **语言** 按[四阶段成稿](../../video-scene-direction/references/prompt-enhancement.md#h3-四阶段成稿)，以已核对的中文模型执行稿为依据写自然英文，再按[逐拍保留细节](../../video-scene-direction/references/prompt-enhancement.md#逐拍保留细节)倒查每个实际镜头。逐项复核方向、起终点、持续状态与声音落点。对白、画内文字、角色或槽位需要精确匹配的名称保留原文。本机封装按下节交付。
 - **声音和文字** 按[对白与静默控制](#对白与静默控制)核对明示的发声次数、标签与非对白声景。完整静音时两个声音字段填 `N/A`。要求读到字时按[画内文字与可读性](#画内文字与可读性)检查实际镜头。
 
 官方英文正文示例见[门缝里的钥匙](examples/door-key-t2va.txt)。[格式检查器](../scripts/check_h3_prompt.py)可从该技能目录运行，输入可以是正文或 1160 完整分段块。例如 `python scripts/check_h3_prompt.py references/examples/biscuit-1160.txt --mode t2va --duration 10`。它检查字段、镜号和切点，以及完整封装使用的分段标记和素材槽 JSON。语言与实际素材关系由交付审查核对。 [MiniMax 官方基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)

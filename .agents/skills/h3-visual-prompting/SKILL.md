@@ -9,7 +9,7 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 
 凡是要设计或修改镜头，包括用户只给一句话、只要提示词或直接调用本技能的情况，都走[两轮调度与终审](../short-video-supervisor/references/review-loop.md#两轮调度与终审)。先按实际场面打开需要的专长资料；完成后只看模型实际会读到的正文和已绑素材，逐项补齐关键要求的画面或声音证据。纯原样排版只核对原文和格式，局部改动另检查受影响的前后镜。
 
-- 从一句话或开放想法开始时用[创意增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)。新写或重写完整 H3 段时，先用[逐秒画面进程](../video-scene-direction/references/prompt-enhancement.md#逐秒检查画面进程)排导演稿，再拆成模型读得懂的动作和触发，按 1160 的语言约定成稿。
+- 从一句话或开放想法开始时用[创意增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)。新写或重写完整 H3 段直接进[四阶段成稿](../video-scene-direction/references/prompt-enhancement.md#h3-四阶段成稿)，先写逐秒导演稿和独立的中文模型执行稿，再转成目标语言封装。
 - 交付 T2VA 或 Ref2VA 文件时，可用[格式检查器](scripts/check_h3_prompt.py)核对模型字段、镜头切点以及 1160 分段标记和素材槽。
 - 做人物造型、白底三视图、系列人物资产包、面部或场景道具参考前，查阅[参考素材与连续性](references/reference-assets.md)。
 - 有台词、需要保持静默、或样片出现额外人声时，用[对白与静默控制](references/h3-formats.md#对白与静默控制)核对原文、发声时点和声景。用[对白时长与切镜](../video-scene-direction/references/music-and-sound.md#对白时长与切镜)检查能否保住自然语速、换气与反应。

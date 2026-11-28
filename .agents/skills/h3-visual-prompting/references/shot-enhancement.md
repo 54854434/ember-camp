@@ -32,6 +32,28 @@
 - **精确写相对顺序。** 1160 单镜内部用「接触后」「松手时」「落地后才」让事件顺序贴着画面走。真实换镜用 H3 切点格式。需要帧级控制时，通过已支持的参考或后期时间线约束。短段优先保住决定故事的一条主链，次要动态加在它的合适时机。 [火山方舟 Seedance 2.0 的分镜与动作描述](https://console.volcengine.com/ark/region:cn-beijing/docs/seedance-2-0-prompt-guide) · [Google DeepMind Veo 的复杂动作指南](https://deepmind.google/models/veo/prompt-guide/)
 - **让参考约束各自的内容。** 场景图可提供布景和静态结构，运动参考可提供所需的轨迹或节奏，具备真实首尾帧输入时可用两张图表达初态与末态。Ref2VA 若把会改变的部件定义成参考对象，按定义写清哪些特征保留、哪些改变。新增动作本身不需降低外观保留等级。 [MiniMax H3 全参考指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_ref_en.md) · [阿里云万相的首尾帧指南](https://help.aliyun.com/zh/model-studio/wan3-video-generation-prompt-guide)
 
+
+## 舞蹈镜头的表演层必须进入实际正文
+
+舞者的脸、双手和头发是可见动作，不是角色外观设定。身份参考只说明人物是谁、长什么样；它不会自动编排表情、手势或发丝运动。
+
+- **T2VA**：把表情、视线、左右手动作路径、头发触发与回落直接写进发生它们的镜头段落，即 integrated_multimodal_description 中的实际 Shot 正文。
+- **Ref2VA**：subject_definitions 只定义身份、发型和可辨认外观；retention_analysis 说明这些身份特征如何保持；每个舞蹈动作、表情变化、手势和发丝惯性都写进 detailed_description 的对应 Shot。不能只在 summary 或 retention_analysis 里写“有表现力的舞者”。
+- **配乐**：持续舞曲写入 non_diegetic_music；脸部、手势和头发响应由哪个拍点触发，仍写在镜头正文，必要时与音乐重音对应。
+- **按 4 拍或 8 拍组织**：先写身体主动作，再分别写视线/表情、左手、右手和头发的动作阶段。允许部分轨道保持稳定，但必须明确它们保持什么姿势或朝向。头发的延迟不能只写“随动作摆动”，要说明由哪次转头、甩头、Wave、跳跃或急停触发，以及发梢何时回落。
+
+英文示例：“On counts 1–2, she looks directly into the lens with a confident half-smile. Her right hand rises from her hip to cheek height, the wrist turning outward as her fingers open; her left hand stays at her waist. On count 3, she snaps her head left and returns her eyes to the camera. Her loose hair follows the head turn a fraction later, fans outward, then settles behind her shoulders by count 4.”
+
+### 按失败现象做最小修正
+
+| 样片问题 | 下一轮先改什么 | 需要观察的证据 |
+| --- | --- | --- |
+| 脸部僵硬或没有表情 | 在中全景或正面三分之四角度，加入一个明确视线目标和一项眉眼/嘴角变化；给该表情留出可读的一拍 | 眼睛是否有目标，表情是否在指定拍点发生，脸部身份是否稳定 |
+| 双手无动作或自然下垂 | 左右手分别写一条简单、可见的起点—路径—终点手势；先测试一个 4 拍手势短句，确保手腕和指尖在画内 | 手是否离开起始位置，路径是否连续，手指是否自然且没有穿插 |
+| 头发像贴图或没有惯性 | 指定一次可见的头部加速/转向/急停，并写发根、中段、发梢的先后响应；确认发型轮廓与背景有反差 | 发束是否晚于头部启动、急停后是否有限越位并回落，是否穿模或遮住关键表情 |
+| 三层动作互相抢戏 | 暂时固定身体主舞步与摄影机，只改一条失败的表演轨道；通过后再恢复其他层 | 目标层改善，同时脚步、构图和人物身份没有退化 |
+
+不要把“不要僵硬、不要垂手、不要静止头发”当成主要修复。优先给出正向、可观察的动作链。对照测试时固定工作流、参考顺序、种子和时长，一次只改变一个失败维度；未生成样片前将写法标为待验证，不承诺必然执行。
 ## 从审片结果选择下一次测试
 
 分别看**身份与构图、动作完成度、动作顺序、时间连续性**。脸和背景稳定的镜头仍需检查指定动作是否发生。按「起始状态 → 关键动作 → 结束状态」各看一帧或一小段，再完整顺放检查过渡、速度和音画同步。需要决定整季工作流时，在可用预算内用另一组固定种子重复同样对照，记录每个镜头的通过项和失败项。 [VBench 对视觉一致性与动态的独立评估](https://arxiv.org/abs/2311.17982)

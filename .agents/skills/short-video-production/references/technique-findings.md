@@ -29,3 +29,18 @@
 - **待本机复验，2026-11-28。** 用户提供的《走位》包中，Higgsfield 3.40.0 的 `staging-reference.md` 记录了机位视角站位图的测试。作者在镜像布置对照中报告 12 个结果里 6 个跟随图示朝向。测试的模型、入口和日期未完整记载。外观污染与位置遵循使用不同样本计数。记录支持分别验收两项，不能据此推定 H3 的站位准确率。
 - **已采用的制作方法。** 用俯视图排路线、机位视角稿核对占位，需准确起幅时再制作干净的实际首帧。是否接入额外示意图由当前入口和本机样片决定。见[从平面走位到可生成首帧](../../video-scene-direction/references/performance-and-blocking.md#从平面走位到可生成首帧)。
 - **本机试法。** 在支持多图参考的同一入口中，用同一组可识别角色、布景和配对种子，对照有无机位示意图。另用左右相反的布置抵消常见的构图倾向。核对人物实际落脚点、位置保持到触发时的表现，以及图示颜色或线条是否进入服装和场景。记录实际图片编号与参考职责。
+
+## 分段生成后的剪接与首帧延续
+
+- **已核实格式与接入方式，2026-11-28。** MiniMax 官方区分原生首帧、首尾帧和普通参考。以本机实际入口决定图像是否锚在指定帧。原生引导有画面帧索引，是否可用按 ComfyUI 版本与接线查证。 [MiniMax 官方提示词 Skill](https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/SKILL.md) · [ComfyUI 原生工作流](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-native)
+- **已采用制作方法，本机出片待复验。** ComfyTV 的作者把段间连续性审查和单变量修复纳入导演流程。Comfy-H3-Director 给出轴线、持物状态与动作阶段共同对齐的写法，其指定的固定秒数、动作百分比与多镜生成效果依案例判断。comfy-h3-mcp 的作者报告了独立切分与连续底声的本机实践，适用其测试环境。吸收可复用的流程，按本机工作流容量和样片验证决定每次生成镜数。 [ComfyTV 制作审查](https://github.com/jtydhr88/ComfyTV/blob/main/skills/h3-cinematic-director/SKILL.md#8-audit-before-delivery) · [Comfy-H3-Director 连续性](https://github.com/MIKA6941/Comfy-H3-Director/blob/main/.agents/skills/ai-video-continuity-director/SKILL.md) · [comfy-h3-mcp 剪接实践](https://github.com/jonpojonpo/comfy-h3-mcp/blob/main/skills/minimax-h3-prompting/SKILL.md#6-assembling-clips-into-a-cut)
+- **本机试法。** 对相邻段保留同一故事事件和资产，分别核对硬切与实际首帧续接这两种交付路径。模式与输入不同的结果各按自身目的验收。对硬切按关键帧检查方向、持物手、接触和现场变化。对同机位续接看实际接点两侧的构图、光比、地标、运动方向和是否有重复帧。两组都试听底声和一次性声响是否接得上。方法归[段间剪接](../../video-scene-direction/references/camera-and-cutting.md#让独立生成的片段能接起来)。
+
+## 镜头可生成性与重剪后的接点复查
+
+- **已采用审查方法，2026-11-28。** Director Agent 分别评估镜头叙事价值和单次生成负荷。Diffusers MiniMax H3 项目报告了 15 次提示词生成对照，时间分配是此样本中可检测的主要错误，其中一部分来自原台词本来就超出给定镜头时长。实验评估的是提示词助手，视频质量需另验。把并发动作和台词可用窗口写进[生成前审查](../../short-video-supervisor/references/event-validation.md#生成前检查提示词)。 [Director Agent 可生成性](https://github.com/SHIFT-R/director-agent/blob/main/references/generation-feasibility.md) · [Diffusers MiniMax H3 技术报告](https://github.com/animede/Diffusers_minimax-h3/blob/main/docs/internal/TECHNICAL_REPORT.en.md#10-llm-prompt-enhancement-and-its-quality-assurance)
+- **已采用接点版本核对，2026-11-28。** InkToFilm 的公开成片案例展示了从上一个已选片段截帧续拍，以及把审查结论指到具体画面。Film Production Skills 将选用片段与实际素材和源区间对应。把可复用的做法缩成[换片后的接点复查](../../short-video-supervisor/references/review-loop.md#拿到样片后)。公开样片采用 H3 Max，作为审片与素材追踪方法的参考。 [InkToFilm 提示词](https://github.com/yingwang/inktofilm/blob/main/examples/great-havoc-in-heaven/prompts.md) · [InkToFilm 审片报告](https://github.com/yingwang/inktofilm/blob/main/examples/great-havoc-in-heaven/report/index.html) · [Film Production Skills](https://github.com/zhangzhangco/film-production-skills/blob/main/README.md#7-review-and-assemble)
+
+## 对照提示词增强规则与保留可复验版本
+
+- **已采用对照与记录方法，2026-11-28。** Prompt Optimizer 仓库的对照 Skill 用已配置的模型测试文本候选，固定共用输入并保存原始结果和个别失败。产品的收藏还能保留变量、示例与来源。迁移到[增强对照](../../short-video-supervisor/references/review-loop.md#比较一句话增强的收益)时，分别检查写词结果和实际 H3 样片，保留能复跑的正文、素材和版本。仓库页面另列视频工作区，具体视频入口及模型接入能力按对应工作流验证。 [对照 Skill](https://github.com/linshenkx/prompt-optimizer/blob/develop/.agents/skills/prompt-optimizer-compare/SKILL.md) · [新版 MCP 操作与请求字段](https://github.com/linshenkx/prompt-optimizer/blob/develop/docs/user/desktop-mcp.md#优化测试评估与比较) · [变量与示例保存](https://github.com/linshenkx/prompt-optimizer/blob/develop/releases/v2.9.6.en.md)

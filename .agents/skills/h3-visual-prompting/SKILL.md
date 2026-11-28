@@ -1,11 +1,11 @@
 ---
 name: h3-visual-prompting
-description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提示词，并排查运镜、背景运动与场景道具一致性。适用于 1160 四步 Turbo、Ref2VA、原生首尾帧及白底人物三视图、半身和面部细节参考。
+description: 为 ComfyUI MiniMax H3 自动增强视频提示词，结合 MiniMax 官方正文与本机 1160 封装，排查运镜、站位、动作和道具连续性。适用于 1160 四步 Turbo、Ref2VA、原生首尾帧及白底人物三视图、半身和面部细节参考。
 ---
 
 # MiniMax H3 视觉提示词
 
-按实际模型、LoRA、时长、画幅与已绑定素材执行。先遵循[模式选择、字段与 1160 默认交付](references/h3-formats.md)。已确认的角色、场景、对白和镜头意图作为改写约束。需要 DirectorDesk 时走 [预演交接](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)。
+按实际模型、LoRA、时长、画幅与已绑定素材执行。走[官方正文与本机交付](references/h3-formats.md#从官方正文到本机交付)，按参考类型读取 MiniMax 官方指南，再按实际节点与用户用途决定交付正文或完整 1160 封装。已确认的角色、场景、对白和镜头意图作为改写约束。需要 DirectorDesk 时走 [预演交接](../directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)。
 
 凡是要设计或修改镜头，包括用户只给一句话、只要提示词或直接调用本技能的情况，都走[两轮调度与终审](../short-video-supervisor/references/review-loop.md#两轮调度与终审)。先按实际场面打开需要的专长资料；完成后只看模型实际会读到的正文和已绑素材，逐项补齐关键要求的画面或声音证据。纯原样排版只核对原文和格式，局部改动另检查受影响的前后镜。
 
@@ -16,7 +16,7 @@ description: 为 ComfyUI MiniMax H3 将一句话创意自动增强为视频提�
 - 镜头中有必须可读的招牌、道具屏幕或标识时，用[画内文字与可读性](references/h3-formats.md#画内文字与可读性)处理原字、载体、取景和失败后的参考或后期。
 - 场景跨镜漂移或损伤复原时，按[场景连续性与破坏](../video-scene-direction/references/action-direction.md#场景连续性与破坏)把地标、受影响部位和残留写进实际镜头。
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
-- 连续时空的多人切镜、换角度后人物或道具串位时，按[切点站位对齐](../video-scene-direction/references/performance-and-blocking.md#在切点对齐人物站位)在切前收幅和切后开幅写同一地标下的实际位置、朝向与动作阶段。机位变化从该状态连续接起。
+- 连续时空换镜、换角度或分段时，按[易穿帮状态](../video-scene-direction/references/performance-and-blocking.md#逐项核对容易穿帮的状态)核对人物站位、实际朝向、承重、持物、佩戴或挂置位置以及布景状态。关键接点写入前镜落幅和后镜起幅。
 - 排查成片或跟踪多轮调整时，直接读[样片反馈](../short-video-supervisor/references/review-loop.md#拿到样片后)记录时间码、证据和下轮变量。
 - 动作先后、接触或运镜反复跑偏时，用[逐事件验收](../short-video-supervisor/references/event-validation.md)定义通过证据，再选择改正文、做关键帧预演或测试实际运动参考。
 - 用户同时要 H3 和 Seedance 时，用[提示词双版本交付](../short-video-supervisor/references/prompt-pair.md)复用同一分镜，按实际模型分别交付可粘贴正文。验证 H3 的提示词增强时，使用同一 H3 工作流进行对照。

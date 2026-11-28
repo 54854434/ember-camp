@@ -32,7 +32,7 @@
 
 ## H3 与预演如何交接
 
-可粘贴的提示词按 [1160 默认交付](h3-visual-prompting/references/h3-formats.md#适配本机-1160)整理。需要两项交付时，可在指令末尾加上「并附 DirectorDesk 分镜清单」，按 [预演交接](directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)处理。
+H3 提示词从 `$short-video-supervisor` 进入，按[官方正文与本机交付](h3-visual-prompting/references/h3-formats.md#从官方正文到本机交付)统一读取 MiniMax 官方指南并适配 1160。涉及切镜或跨段时，按[易穿帮状态](video-scene-direction/references/performance-and-blocking.md#逐项核对容易穿帮的状态)核对前后镜头。需要两项交付时，可在指令末尾加上「并附 DirectorDesk 分镜清单」，按 [预演交接](directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)处理。
 
 ## 按导演任务查阅
 

@@ -1,5 +1,11 @@
 # H3 官方结构与 1160 输入
 
+## 从官方正文到本机交付
+
+1. **先确定实际输入和成片。** 根据下节选择原生文字/关键帧模式或 Ref2VA。用同一份导演安排核对真正的切点、人物站位、道具去向和声音，相关状态逐段写进模型实际收到的正文。只转格式时沿用用户已经确定的镜头与动作。
+2. **读取 MiniMax 官方技能对应的指南。** 优先读取同一技能目录下已安装的 `h3-prompt-writing/SKILL.md`，配套读取 `h3-prompt-writing/references/base-en.txt`（T2VA、I2VA、FL2VA、L2VA）或 `h3-prompt-writing/references/ref-en.txt`（Ref2VA）。用官方指南定模型正文的字段、顺序、引用语法、真实切点和对齐句。当前工作区缺少本地官方副本时可读取官方仓库文件。 [官方技能](https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/SKILL.md) · [基础模式](https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/references/base-en.txt) · [全参考模式](https://github.com/MiniMax-AI/MiniMax-H3/blob/main/skills/h3-prompt-writing/references/ref-en.txt)
+3. **按实际接入方式交付。** 原生输入使用官方正文和实际接线。1160 自动分段和素材调度按本页[本机封装](#适配本机-1160)组装外层；用户只贴单段且已手动绑图时，可以直接交付正文。先核对模式和实际槽位，再按[成稿倒查](../../short-video-supervisor/references/review-loop.md#从成稿倒查镜头)检查动作、持物、布景和接点有没有在中文执行稿到最终正文的转写中丢失。
+
 ## 选择提示词模式
 
 | 模式 | 使用条件 | 写法 |
@@ -13,6 +19,12 @@
 原生三字段是 `integrated_multimodal_description`、`overall_soundscape`、`non_diegetic_music`。I2VA、FL2VA、L2VA 的首行从官方原文取对应固定句，替换末镜编号和有效时长（如适用）。有效时长依实际帧数及节点行为确定，首尾图先按目标画幅准备。本机亦可在 `ComfyUI/custom_nodes/ComfyUI-JZL-MiniMax-H3/support_llama/presets/` 查阅对应的 `minimax_i2va.py`、`minimax_fl2va.py`、`minimax_l2va.py`。 [MiniMax 原生基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)
 
 原生固定句之后留一个空行，再进入三字段。I2VA 的首帧落在 `[Shot 1]` 的 0.00 秒。FL2VA 先设计首帧到尾帧的连续可行路径，默认单镜；指定多镜时，由实际末镜抵达尾帧。FL2VA 与 L2VA 用实际末镜编号和两位小数的有效时长。两种句子的 `Picture` 和 `Shot` 括号写法不同，按各自官方模板原样取用。
+
+### 跨生成段的实际帧输入
+
+- 先按[段间剪接](../../video-scene-direction/references/camera-and-cutting.md#让独立生成的片段能接起来)决定观众是否应看到换机位。计划用剪辑硬切时，前后各自交付可独立生成的片段，在正文写明接点两侧的状态。外部段间切点留给剪辑安排。`[Shot N] At MM:SS.mmm` 仅用于同一次生成内部的真实切镜。对切点要求精确而当前工作流还缺少样片验证时，优先把两个机位拆开生成。
+- 要保持同一机位连续时，优先从已通过的上段选一张干净的接点 PNG。把上段剪到这张图对应的实际帧，并通过支持实际首帧的输入接到后段 I2VA。只有首尾都已有合适的实际目标图时使用 FL2VA，并按实际有效时长填写对齐句。送入原生节点的是相应模式的模型正文和真实图像。角色三视图、空布景和带字幕的截图分别按其用途管理。
+- 使用当前 1160 的 Ref2VA 调度时，若选择加入上段末帧，把它作为构图和动作阶段参考，并用实图编号与实际槽位绑定。身份图与布景图仍按各自任务引用。只有经节点实际接入首帧条件时，才把首帧当作锚点。需要更高的时间连续精度时，可在支持的原生版本核对图像和视频引导输入与帧索引，再决定是否启用。 [MiniMax H3 基础模式](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md) · [ComfyUI 原生帧引导](https://docs.comfy.org/tutorials/video/minimax/minimax-h3-native#anchoring-guides-at-any-frame-15439)
 
 ## Ref2VA 六字段分别负责什么
 

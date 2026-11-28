@@ -7,7 +7,8 @@ description: 将一句话创意增强为视频分镜，设计人物站位与走�
 
 先确定这一段观众要看懂的动作、产生的感受和看到的结果。用户已锁定的人物、服装、对白、画风和画幅照常使用。出现执行问题时，先找动作、机位、切点、声音或素材的哪一项出了问题。用户只改其中一项时，保留其余设计。
 
-- 动作含糊、双人接不上或奇幻交锋缺少因果时，读[动作指导与编排](references/action-direction.md)。舞步、队形、冰上动作或音乐跨段时，读[舞蹈与冰上动作设计](references/dance-and-skating.md)。
+- 动作含糊、双人接不上或奇幻交锋缺少因果时，读[动作指导与编排](references/action-direction.md)。舞步、队形、冰上动作或音乐跨段时，读[舞蹈与冰上动作设计](references/dance-and-skating.md)；Twerk 与 K-pop 舞蹈读其 [Twerk 与高能编舞](references/dance-and-skating.md#twerk-与高能-k-pop-舞蹈)小节。
+- K-pop 女团 MV、舞蹈跟拍或用户明确要求摄影机持续运动时，读[摄影与切镜调度](references/camera-and-cutting.md#舞蹈-mv-动态跟拍)，逐镜设计可见的摄影机路径、景别和动作接点，不能只写“动感运镜”。
 - 破坏效果只剩粒子、布景跨镜重建或损伤复原时，按[场景连续性与破坏](references/action-direction.md#场景连续性与破坏)限定受击位置和残留状态。
 - 运镜、构图和换机位干扰动作，或需要做对话、舞蹈、战斗分镜时，读[摄影与切镜调度](references/camera-and-cutting.md)。
 - 人物串位、目光偏移或道具交接失败时，读[人物走位与真人表演](references/performance-and-blocking.md)。真人短剧、宅家或街头自拍、情绪和口型僵硬时，读[真人表演、口型与写真质感](references/live-action-performance.md)。

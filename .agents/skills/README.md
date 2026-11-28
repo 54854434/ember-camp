@@ -8,15 +8,16 @@
 | 选题、编剧、漫剧与单元剧、平台复盘 | `$short-video-production` | [原创短视频制作](short-video-production/SKILL.md) |
 | 运镜切镜、人物调度、真人表演、奇幻场面、声音 | `$video-scene-direction` | [动作与视听调度](video-scene-direction/SKILL.md) |
 | H3 1160 提示词、角色三视图和资产包、参考绑定 | `$h3-visual-prompting` | [H3 视觉提示词](h3-visual-prompting/SKILL.md) |
+| 明确指定的成人亲密场面 | `$adult-scene-direction` | [成人场面调度](adult-scene-direction/SKILL.md) |
 | 白模工程、预演视频与 H3 视频参考接入 | `$directordesk-h3-previs` | [DirectorDesk 白模预演](directordesk-h3-previs/SKILL.md) |
 
-可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词。`
+可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词。` 聊天模式或其他模型可用[仓库首页的一句话调用](../../README.md#在聊天模式或其他模型中调用)。
 
 制作调度台会先看题材、要求和素材，再从摄影、剪辑、动作、表演、美术、特效、声音与 H3 格式逐项检查需要用到的技法。终审只依据模型实际收到的文字和引用。若需要看到采用情况，可加「附终审摘要」，查看哪一镜采用了什么、修了什么。见[两轮调度与终审](short-video-supervisor/references/review-loop.md#两轮调度与终审)。
 
 要让调度台维护技法，可以发送 `$short-video-supervisor 学习一轮，找国内外原作者的实测，优先补最近反复出错的 H3 运镜。` 找到的写法、适用入口和复验结果保存在[研究记录](short-video-production/references/technique-findings.md)。以后遇到同类问题，调度台从这份记录接着研究。
 
-## 五个技能如何协作
+## 通用技能与专项如何协作
 
 同一条片共用一份镜头安排，按段与镜号记录必保留内容、可见变化、交付条件和待核对处。各入口沿用已有决定，按本次任务补需要的内容。
 
@@ -30,6 +31,8 @@
 
 参考即梦效果时，用[同条件样片方法](short-video-supervisor/references/review-loop.md#比较一句话增强的收益)比较具体看点、节奏、运镜、表演与声画。新构思按场面补叙事和视听细节，已有样片按出现时间做局部校正。
 
+剧本确有成人向场次时，调度台先按[成人场面适用范围](adult-scene-direction/SKILL.md#适用范围与调用)选择涉及的镜头，再把专项决定接回同一份导演安排和 H3 终审。
+
 ## H3 与预演如何交接
 
 H3 提示词从 `$short-video-supervisor` 进入，按[官方正文与本机交付](h3-visual-prompting/references/h3-formats.md#从官方正文到本机交付)统一读取 MiniMax 官方指南并适配 1160。涉及切镜或跨段时，按[易穿帮状态](video-scene-direction/references/performance-and-blocking.md#逐项核对容易穿帮的状态)核对前后镜头。需要两项交付时，可在指令末尾加上「并附 DirectorDesk 分镜清单」，按 [预演交接](directordesk-h3-previs/references/h3-handoff.md#给写剧本的对话)处理。
@@ -42,6 +45,8 @@ H3 提示词从 `$short-video-supervisor` 进入，按[官方正文与本机交�
 | 角色身份、三视图、表情和服装资产 | [完整角色资产总览](h3-visual-prompting/references/reference-assets.md#完整角色资产总览) |
 | 设计景别、焦点、镜头路径或特殊机位 | [摄影与切镜调度](video-scene-direction/references/camera-and-cutting.md) · [特殊机位、运动与时间效果](short-video-production/references/camera-and-editing.md#特殊机位运动与时间效果) |
 | 人物站位、走位、接镜和首帧 | [人物调度与首帧交接](video-scene-direction/references/performance-and-blocking.md) |
+| 切镜后地标、道具落点、湿痕与脚印 | [环境状态接镜](h3-visual-prompting/references/shot-enhancement.md#把环境状态接到下一镜) · [木环与湿脚印示例](h3-visual-prompting/references/examples/courtyard-ring-1160.txt) |
+| 资产文件名、素材名称和实际图号 | [资产图命名与提示词绑定](h3-visual-prompting/references/reference-assets.md#资产图命名与提示词绑定) |
 | 真人表演、口型、朦胧写真和自拍 | [真人表演、口型与写真质感](video-scene-direction/references/live-action-performance.md) |
 | 舞蹈、齐舞、带音乐的动作和滑冰 | [舞蹈与冰上动作设计](video-scene-direction/references/dance-and-skating.md) |
 | 半写实 3DCG、三渲二、真人电影、光色与衣发 | [画面美术与角色渲染](video-scene-direction/references/look-design.md) |
@@ -50,4 +55,4 @@ H3 提示词从 `$short-video-supervisor` 进入，按[官方正文与本机交�
 | 多余人声、说完后的口型、招牌与屏幕原字 | [对白与静默控制](h3-visual-prompting/references/h3-formats.md#对白与静默控制) · [画内文字与可读性](h3-visual-prompting/references/h3-formats.md#画内文字与可读性) |
 | 拆解参考运镜、判断样片偏差、替换镜头 | [从参考推导路径与修正样片](video-scene-direction/references/camera-and-cutting.md#从参考推导路径与修正样片) |
 
-每个技能从自己的 `SKILL.md` 进入，按任务加载相邻 `references/`。维护时保持此目录与本机五个技能的相对位置一致。公开样稿用于提炼可复用的方法。实际模型字段、素材职责和时长依当前工作流核对。
+每个技能从自己的 `SKILL.md` 进入，按任务加载相邻 `references/`。维护时保持此目录与本机技能的相对位置一致。公开样稿用于提炼可复用的方法。实际模型字段、素材职责和时长依当前工作流核对。

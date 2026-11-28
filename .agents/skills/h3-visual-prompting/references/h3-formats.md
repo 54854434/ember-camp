@@ -35,7 +35,7 @@
 | `subject_definitions` | 每个需要追踪的内容各占一行，写清来源、可辨认特征和职责。同一角色的脸、衣服或动作来自不同素材时，合进一个 `<Subject N>`，逐份限定其作用 |
 | `summary` | 用一个短段概括目标、主要参考关系和镜头最终结果。开头用实际任务类型标记。参考视频只提供走位、机位或节奏时用 `[reference generation]`；实际帧锚点用 `[keyframe completion]`。存在多种任务关系时可用 `+` 组合 |
 | `retention_analysis` | 每个已定义标签对应一行，写清在哪一镜或哪一段生效、继承什么、允许改变什么。保留程度只针对已定义的职责。参考只负责身份时，新动作和新背景可以与身份的 `fully_preserved` 共存 |
-| `detailed_description` | 全片共用的画风与光线先写在 `[Shot 1]` 前。逐镜写当前构图、主体位置和姿势、场景地标、主动作及结果、跟随或揭示的机位、背景响应和当下的声音。在素材真正提供身份、构图、动作或声音的位置写回对应标签 |
+| `detailed_description` | 全片共用的画风与光线先写在 `[Shot 1]` 前。逐镜写当前构图、主体位置和姿势、场景地标、主动作及结果、跟随或揭示的机位、背景响应和当下的声音。舞蹈镜头还要在对应 Shot 正文写明视线与表情变化、左右手动作路径、手指姿态及头发受动作驱动的延迟和回落。在素材真正提供身份、构图、动作或声音的位置写回对应标签 |
 | `overall_soundscape` | 整段可听的环境底声、动作音效和非语言人声。安静环境也可有轻微底噪 |
 | `non_diegetic_music` | 观众听到的配乐。现场收音机、唱歌或角色听得到的音乐放到镜头正文。无配乐写 `N/A` |
 
@@ -65,10 +65,12 @@ Ref2VA 的任务标记依据实际使用关系。`[video editing]` 适用于直�
 
 ## 交付前审查官方正文
 
+- **场景与道具连续性** 按[环境状态接镜](shot-enhancement.md#把环境状态接到下一镜)把地标、交互过程和继承状态写成对应 Shot 的自然叙述。Ref2VA 放进 `detailed_description`，基础模式放进 `integrated_multimodal_description`。导演清单、状态表以及 `ENVIRONMENTAL STATE CONTINUITY - CRITICAL` 之类的独立元指令块留在内部审稿，禁止粘贴到模型正文。1160 沿用原有的 H3 正文边界和三类调度区，正文保留对应模式的字段。
 - **T2VA** 按官方示例排版，三个字段在各自的行内开始填写。第一行把 `[Shot 1]` 紧接在 `integrated_multimodal_description:` 后，先写画风和起始构图，再按动作顺序叙述。1160 的单镜内用动作顺序和明确触发安排节奏。实际切镜另起递增的 `[Shot N]`，用单一的 `At MM:SS.mmm` 写切点。Seedance 的时间段可作为导演稿，转成 H3 正文时依真实镜头数量组织。
-- **Ref2VA** 按上表的顺序保留六字段。首镜从 `[Shot 1]` 直接写画面；后续实际切镜用 `[Shot N] At MM:SS.mmm`。时间范围可留在导演稿。最后按实际绑定顺序核对素材槽和编号，确认每个参考标签的职责与对应保留标记一致。同一标签同时承担身份和服装、且计划调整服装时，可用 `partially_preserved` 逐项写明身份保留与服装变化。
+- **Ref2VA** 按上表的顺序保留六字段。首镜从 `[Shot 1]` 直接写画面，后续实际切镜用 `[Shot N] At MM:SS.mmm`。时间范围可留在导演稿。对照[资产图命名与提示词绑定](reference-assets.md#资产图命名与提示词绑定)，按实际绑定顺序核对资产名、槽位和编号。参考标签的职责与保留标记须相符。同一标签同时承担身份和服装、且计划调整服装时，可用 `partially_preserved` 逐项写明身份保留与服装变化。
 - **语言** 按[四阶段成稿](../../video-scene-direction/references/prompt-enhancement.md#h3-四阶段成稿)，以已核对的中文模型执行稿为依据写自然英文，再按[逐拍保留细节](../../video-scene-direction/references/prompt-enhancement.md#逐拍保留细节)倒查每个实际镜头。逐项复核方向、起终点、持续状态与声音落点。对白、画内文字、角色或槽位需要精确匹配的名称保留原文。本机封装按下节交付。
 - **声音和文字** 按[对白与静默控制](#对白与静默控制)核对明示的发声次数、标签与非对白声景。完整静音时两个声音字段填 `N/A`。要求读到字时按[画内文字与可读性](#画内文字与可读性)检查实际镜头。
+- **舞蹈表演层** 核对每个关键短句是否在实际 Shot 正文写出目光目标与表情节点、左右手的起点和路径、头发运动的触发及回落。身份参考和保留分析不能代替这些动态指令；相应部位还必须在当前景别内可见。
 
 官方英文正文示例见[门缝里的钥匙](examples/door-key-t2va.txt)。[格式检查器](../scripts/check_h3_prompt.py)可从该技能目录运行，输入可以是正文或 1160 完整分段块。例如 `python scripts/check_h3_prompt.py references/examples/biscuit-1160.txt --mode t2va --duration 10`。它检查字段、镜号和切点，以及完整封装使用的分段标记和素材槽 JSON。语言与实际素材关系由交付审查核对。 [MiniMax 官方基础模式指南](https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md)
 

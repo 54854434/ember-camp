@@ -27,7 +27,7 @@
 | 两人以上交锋、交接或换位 | [动作与局势变化](../../video-scene-direction/references/action-direction.md#高速动作与场面升级)、[人物走位](../../video-scene-direction/references/performance-and-blocking.md) | 起势有来路，回应有对象，结果改变双方距离、持物或通路。换位过程在画内，或者切前切后有同一动作或地标可接 |
 | 连续跟拍、关键揭晓或多镜剪接 | [摄影与切镜](../../video-scene-direction/references/camera-and-cutting.md)、[镜头技法与应用](../../short-video-production/references/camera-and-editing.md) | 机位起点、触发、路径和落幅可以推导。切后出现新的可读信息，保留足以接续的动作、视线、构图或声场 |
 | 异常光效、环境交互、局部破坏或大场面 | [特效、材质与环境响应](../../video-scene-direction/references/vfx-design.md)、[高密度特效分镜](../../video-scene-direction/references/cinematic-shot-plan.md#高密度动作与特效分镜) | 能看见效果来源和传播。局部损伤有边界，整体规模有参照。两个相近触发有可区分的响应，残留状态和下一镜的证明写进正文 |
-| 舞蹈、齐舞变阵或冰上表演 | [舞蹈与冰上动作](../../video-scene-direction/references/dance-and-skating.md) | 承重、脚底接触、路线、音乐短句和镜段出口能对得上，换镜后动作接着走 |
+| 舞蹈、齐舞变阵或冰上表演 | [舞蹈与冰上动作](../../video-scene-direction/references/dance-and-skating.md)，并按需读取[舞蹈表演层](../../video-scene-direction/references/dance-and-skating.md#面部表演手部编舞与头发二级运动)、[真人舞蹈表情](../../video-scene-direction/references/live-action-performance.md#舞蹈表演中的面部动作)和[头发二级运动](../../video-scene-direction/references/look-design.md#头发与服装的二级运动) | 除承重、脚底接触、路线和音乐短句外，还要核对表情节点、左右手手势路径、发束惯性是否写进实际镜头正文；换镜后动作和头发余势接得上 |
 | 分辨半写实 3DCG、三渲二或真人，表情时画风漂移 | [画面美术与角色渲染](../../video-scene-direction/references/look-design.md) | 起幅定义渲染、光源及材质，开口、转侧脸、强光和切镜后仍维持原定造型与质感。可记住的画面有具体落点 |
 | 真人表演、写真自拍、剧情对白或重要的听者反应 | [真人表演与写真质感](../../video-scene-direction/references/live-action-performance.md)、[对白时长](../../video-scene-direction/references/music-and-sound.md#对白时长与切镜) | 人物视线和表情由具体事件触发，在相应景别可见。光线和焦点保留可辨认的脸。说话人、对白原文、出声与沉默正确 |
 | 动态写真里有局部互动、完整体态和对镜表情 | [动态写真与镜头互动](../../video-scene-direction/references/live-action-performance.md#动态写真与镜头互动) | 用户指定的主要看点占足时长，接触和反馈同框可读，手势、目光和有惯性的发束在实际镜头里有触发与收势；身体、服装与参考职责对得上 |
@@ -47,7 +47,10 @@
 | 画面选择 | 能指出机位移动或剪切露出了什么、形成什么对比、怎样改变注意力。主体、威胁和反应的位置有根据，关键信息处于景别覆盖范围 |
 | 模型语言 | 把「坚定」「危机」「震撼」翻译成演员姿态、视线、道具、空间比例、声响或光影。关键事件写清主体做了什么、接触或触发点、随后变化的是谁 |
 | 场景交互 | 必须出现的道具、环境响应和独立背景运动，在发生的镜头正文里有可见触发或起始条件、可辨认的运动和后续状态。小反馈另查接触点、变化区域、对比线索和可读停留。见 [H3 场景交互写法](../../h3-visual-prompting/references/shot-enhancement.md#把场景交互写进镜头正文)与[接触后的反馈](../../h3-visual-prompting/references/shot-enhancement.md#接触发生后还要拍出反馈) |
+| 剧本到人物、场景或同框图 | 对照[正式名与派生图](../../h3-visual-prompting/references/reference-assets.md#统一角色与场景名称)和[多人身份核对](../../h3-visual-prompting/references/reference-assets.md#双人和多人参考)，同一地点的正式名和几何一致，各人物在同框图中与各自的单人主图对应。只收到文本时记录命名和参考职责的审查结果，出图后再核对人脸 |
+| 道具或布景跨镜 | 前镜的落点、固定地标和仍持续的变化在后镜开头能对上。核对[环境连续性](event-validation.md#环境连续性核对)与已启用参考的[资产命名和绑定](../../h3-visual-prompting/references/reference-assets.md#资产图命名与提示词绑定) |
 | 时空关系 | 相邻时间段顺序一致，人体朝向与摄影机路径有独立的空间参照，镜头能保住需要看清的手、脚和表情。复杂移动镜头按首帧、转折点、接触或揭晓帧和尾帧核对。环境变化与拟音有对应的触发动作 |
+| 人物动态层 | 舞蹈镜头的视线与表情在指定拍点可辨；左右手有各自连续的动作路径和自然手指姿态；头发由明确的头颈动作触发，具有延迟、有限越位和回落，且没有遮住关键表情 |
 | H3 输入 | 按实际模式核对正文语言、字段、镜头切点、环境声、配乐及真实素材槽。英文成稿与导演稿对照，检查转写有没有改掉动作顺序、方向、时长、原台词或画内文字。见 [H3 官方结构与本机输入](../../h3-visual-prompting/references/h3-formats.md) |
 
 ### 从成稿倒查镜头

@@ -11,6 +11,8 @@ description: 视频提示词制作调度台。把创意、剧本或参考素材�
 
 H3 任务统一走[官方正文与本机交付](../h3-visual-prompting/references/h3-formats.md#从官方正文到本机交付)，从同一份逐镜导演安排转入官方格式，再按实际节点输出。连续时空的切镜和段间接点按[易穿帮状态](../video-scene-direction/references/performance-and-blocking.md#逐项核对容易穿帮的状态)审查，关键状态进入前后镜正文。
 
+明确成人向性内容或用户指定成人亲密场面专项时，在导演设计前读[成人场面调度](../adult-scene-direction/SKILL.md#适用范围与调用)，按具体场次选用参考并把结论写回逐镜稿。普通恋爱、泳装、舞蹈、写真、非性接触或单个术语本身仍按通用场面调度。H3 字段、实际素材绑定与终审照常执行。
+
 用户要求优化技能时，以反馈为起点，沿同一成因和前后交接检查类似问题。一起修订相关的设计、模型写法与终审规则，优先补到各自现有章节。区分能从文本确认的缺口和需样片验证的候选，按用户指定的范围维护。
 
 1. **选岗位并设计。** 新写、续写与改镜按[两轮调度与终审](references/review-loop.md#两轮调度与终审)分派。用[岗位如何做判断](../short-video-production/references/roles-and-handoffs.md#岗位如何做判断)决定各自要解决的画面或声音问题。开发完整剧本走[故事定位到可拍分场](../short-video-production/references/screenwriting.md#从故事定位到可拍分场)。需要从提取或生成资产一路做到导演稿时，走[资产到分镜](../short-video-production/references/directing.md#先准备资产再完成分镜导演稿)，按镜号复核素材的版本与用途。遇到新技法、未知版本或反复偏差时，按[主动学习](../short-video-production/references/research-and-update.md#创作过程中如何主动学习)先查同类研究记录，再查证能改变本轮设计的问题。

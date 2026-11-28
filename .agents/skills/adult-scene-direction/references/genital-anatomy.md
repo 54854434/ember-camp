@@ -33,3 +33,8 @@ his erect penis is inserted in her vagina; he thrusts in and out of her vagina
 
 ## 与参考绑定
 优先使用局部特写图作为 <Subject N> 或 <Picture N>，retention 写 fully_preserved for genital anatomy。
+
+## 只有穿衣服图或纯文生时
+- 露出瞬间必须立刻使用上述正向描述。
+- retention 用条件句覆盖：`When lower body is revealed: correctly proportioned [male/female] genitals remain fully present and accurately shaped.`
+- 男娘场景额外强调 “clearly male” 与 “do not replace with female genitals”。

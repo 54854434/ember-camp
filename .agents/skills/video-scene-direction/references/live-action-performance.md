@@ -35,6 +35,17 @@
 
 对话挑真正改变听者判断的那个词或动作。听者听到关键字时可以先停住手上的事或改变视线，保留静默，再按剧情决定立即接话、迟一点回答还是继续听。发声者保持同一音色，按这一场的意图改变音量、停顿或重音。镜头要拍出反应，先给脸、手或承重部位留可读空间。
 
+### 把表演动机变成可验收的动作
+
+导演稿按「对谁做什么 → 对方或处境怎样抵住 → 人物尝试什么 → 哪条证据让他维持或换办法」推演，需要潜台词时，再确定哪一个手势、视线或距离变化暗示真实意图。模型正文只保留镜头能读到的表现。镜头短时可只拍一个策略与一次响应，长段按确实改变局面的表演节拍安排。
+
+- **表情先演到结果。** 回退到此刻人物能知道的信息，让观众先看到发现或听清的过程，再看到情绪变化。选能读出的视线目标、手上变化或动作停点。需要克制时优先减掉整套夸张表情，保留一处有因果的变化。
+- **听者像在等口令。** 给反应一个具体的词、声音或对方的动作。先变化的部位可以是眼睛、手或重心，再安排接话。有意迟钝、错过信息或延迟反应时，把可见原因写出来。
+- **群像同步或情绪重置。** 先让能看到或听到刺激的人作出反应，其他人因视线、距离或没明白而稍后行动或保持当前行为。跨镜核对仍有效的呼吸、姿势、距离和道具。整齐反应可用于明确设计的合拍或喜剧效果。
+- **声音串人。** 固定档案保留音色、口音等身份特征，逐句另写本场的力度、速度和停顿。实际引用的音色或录音、说话人编号和原台词按[H3 对白与静默控制](../../h3-visual-prompting/references/h3-formats.md#对白与静默控制)落到正确的字段。无台词的画内人物按其聆听或动作状态表现。
+
+文字终审核对触发、见得到的部位、反应与原台词。审片时各自记录清楚、部分可辨、缺失或看不清。主观魅力留在审片意见，用失手、反应和下一步的具体画面解释判断。
+
 ### H3 微表情的英文写法
 
 - **先定情绪和幅度。** 在该镜英文动作正文里可试用「情绪词 + `micro expressions`」，如 `subtle sad micro expressions`，提示角色短暂露出克制的悲伤。保留同段内的情绪触发与可见动作。锚定词属于待验证的提示词写法，试法见[微表情对照](../../short-video-production/references/technique-findings.md#微表情的锚定词和部位顺序)。
@@ -43,7 +54,7 @@
 例如保留擦泪的一镜。开场取肩上近景，留出手入画的空间。视线、嘴唇和手的先后全部写进同一个镜头的正文。
 
 ```text
-The person across the table sets the returned key down with a soft click. Lin shows subtle sad micro expressions. She holds the other person's gaze, then presses her lips together and lowers her eyes to the key. A tear slips onto her left cheek. She quickly brushes it away with the back of her left hand, lowers her hand out of frame, and looks back at the other person before saying <d>我知道了。</d> in a low, steady voice.
+The person across the table sets the returned key down with a soft click. Lin shows subtle sad micro expressions. She holds the other person's gaze, then presses her lips together and lowers her eyes to the key. A tear slips onto her left cheek. She quickly brushes it away with the back of her left hand, lowers her hand out of frame, and looks back at the other person. Lin (S1) says in a low, steady voice, <d>[Chinese] 我知道了。</d>
 ```
 
 ## 说话、聆听与身体动作

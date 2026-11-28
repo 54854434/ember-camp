@@ -10,7 +10,7 @@
 | H3 1160 提示词、角色三视图和资产包、参考绑定 | `$h3-visual-prompting` | [H3 视觉提示词](h3-visual-prompting/SKILL.md) |
 | 白模工程、预演视频与 H3 视频参考接入 | `$directordesk-h3-previs` | [DirectorDesk 白模预演](directordesk-h3-previs/SKILL.md) |
 
-可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词。`
+可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词。` 聊天模式或其他模型可用[仓库首页的一句话调用](../../README.md#在聊天模式或其他模型中调用)。
 
 制作调度台会先看题材、要求和素材，再从摄影、剪辑、动作、表演、美术、特效、声音与 H3 格式逐项检查需要用到的技法。终审只依据模型实际收到的文字和引用。若需要看到采用情况，可加「附终审摘要」，查看哪一镜采用了什么、修了什么。见[两轮调度与终审](short-video-supervisor/references/review-loop.md#两轮调度与终审)。
 
@@ -42,6 +42,8 @@ H3 提示词从 `$short-video-supervisor` 进入，按[官方正文与本机交�
 | 角色身份、三视图、表情和服装资产 | [完整角色资产总览](h3-visual-prompting/references/reference-assets.md#完整角色资产总览) |
 | 设计景别、焦点、镜头路径或特殊机位 | [摄影与切镜调度](video-scene-direction/references/camera-and-cutting.md) · [特殊机位、运动与时间效果](short-video-production/references/camera-and-editing.md#特殊机位运动与时间效果) |
 | 人物站位、走位、接镜和首帧 | [人物调度与首帧交接](video-scene-direction/references/performance-and-blocking.md) |
+| 切镜后地标、道具落点、湿痕与脚印 | [环境状态接镜](h3-visual-prompting/references/shot-enhancement.md#把环境状态接到下一镜) · [木环与湿脚印示例](h3-visual-prompting/references/examples/courtyard-ring-1160.txt) |
+| 资产文件名、素材名称和实际图号 | [资产图命名与提示词绑定](h3-visual-prompting/references/reference-assets.md#资产图命名与提示词绑定) |
 | 真人表演、口型、朦胧写真和自拍 | [真人表演、口型与写真质感](video-scene-direction/references/live-action-performance.md) |
 | 舞蹈、齐舞、带音乐的动作和滑冰 | [舞蹈与冰上动作设计](video-scene-direction/references/dance-and-skating.md) |
 | 半写实 3DCG、三渲二、真人电影、光色与衣发 | [画面美术与角色渲染](video-scene-direction/references/look-design.md) |

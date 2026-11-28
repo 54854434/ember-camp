@@ -1,0 +1,44 @@
+[SHOT_START]
+### Video_001
+**标题**: 木环与湿脚印
+**时长**: 10 秒
+**景别**: 侧面中景，同侧低机位近景
+**运镜**: 侧向短移，切至柱脚近景
+**角色**: 管理员
+**场景**: 前庭_雨后_主视角
+**道具**: 浅色木环
+**动作描述**: 管理员把木环放在柱脚，湿靴在石板上留下脚印。切镜接住相同的木环和脚印。
+**氛围光影**: 雨后阴天，石板上的湿痕清楚可辨。
+
+===H3_PROMPT===
+subject_definitions:
+<Subject 1> is the courtyard shown in <Picture 1> (前庭_雨后_主视角), used for the layout of the stone step, the oak post and the path into the courtyard.
+
+summary:
+[reference generation] A caretaker moves a pale wooden ring from the wet step to the base of the oak post and leaves a wet boot print on the paving beside it. A lower angle shows both marks of her passage in the same courtyard.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1], [Shot 2]): fully_preserved - retain the fixed positions of the stone step, oak post and courtyard path. The ring's position and the moisture on the paving change through the on-screen action.
+
+detailed_description:
+An overcast courtyard after rain. A low stone step leads onto sheltered, pale paving. An oak post stands on the inner side of the step.
+
+[Shot 1] In <Subject 1>, a medium side view holds the step, oak post and caretaker in frame. A pale wooden ring lies flat on the wet step, and the paving at the post's base is dry. The caretaker lifts the ring off the step. She plants her wet right boot on the dry paving beside the post. When she lifts that boot to take the next step, a dark tread print is visible beside the post. She bends and sets the ring flat against the base of the post with a light tap, then releases it. The camera slides a little along the wet step and ends with the ring and the print still visible.
+
+[Shot 2] At 00:06.000, cut to a low close view from the same side of the path. The edge of the same step in <Subject 1> is visible in the background. The wooden ring already lies flat against the oak post, with the same dark right-boot print on the paving a short distance closer to the step. The caretaker straightens and takes another step farther into the courtyard. The ring and wet print remain visible in the foreground as she leaves the frame.
+
+overall_soundscape:
+Quiet courtyard ambience and occasional roof drips. Damp boot steps, then a light wooden tap when the ring meets the paving.
+
+non_diegetic_music:
+N/A
+
+===SCENE_INSTRUCTION===
+{"slots":["场景:场景A"]}
+
+===VIDEO_INSTRUCTION===
+{"slots":[]}
+
+===AUDIO_INSTRUCTION===
+{"slots":[]}
+[SHOT_END]

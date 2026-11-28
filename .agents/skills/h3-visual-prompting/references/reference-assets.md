@@ -66,3 +66,8 @@ Head-and-shoulders identity reference of the same character, {front or three-qua
 | 道具状态图 | 开合、完整或损坏、指针初末位置及接触关系 | `Two clearly separated panels of the same {prop}: {starting state} and {ending state}. Preserve dimensions, material and fixed anchor points; show the exact change to {hinge, handle, surface or contents}.` |
 
 每个镜头填写人物、服装、场景、道具版本，注明哪张图负责身份、哪张负责环境、哪张负责开场构图。白底身份图与实际故事环境是两种用途；镜头正文要明确实际背景。需要精确构图时，先准备合成后的场景关键帧。保持物件的绝对位置，让摄影机移动造成的画面左右变化能从同一平面布局推导。
+
+## 从候选构图到可用参考
+
+- 多机位图可比较同一布景的取景方案。故事节拍图可比较同一段的开场、动作和结果。先从中选出承担本次任务的单格，检查脸部、轴线、服装、持物与地标，再裁出或以主参考重制为独立关键帧。精确首尾帧优先提交各自的干净单图。整张拼版作为参考时按实际入口指明用到的具体面板。
+- 局部编辑从已确认原图或最近通过验收的版本出发。写清改变的位置、改到什么状态，以及须核对的人脸、姿态、构图、光位和关键物件。改动失败时从已确认的底图恢复再试，避免串用已经漂移的派生图。批准新版本后更新引用与素材次序，留下可以回退的来源图。

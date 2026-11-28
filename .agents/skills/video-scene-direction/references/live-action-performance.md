@@ -57,6 +57,20 @@
 The person across the table sets the returned key down with a soft click. Lin shows subtle sad micro expressions. She holds the other person's gaze, then presses her lips together and lowers her eyes to the key. A tear slips onto her left cheek. She quickly brushes it away with the back of her left hand, lowers her hand out of frame, and looks back at the other person. Lin (S1) says in a low, steady voice, <d>[Chinese] 我知道了。</d>
 ```
 
+
+## 舞蹈表演中的面部动作
+
+舞蹈镜头没有对白，也需要明确的面部表演。先确定人物此刻是在对镜头表演、回应观众、与舞伴互动，还是专注于动作本身，再安排视线和表情；不要默认人物从头到尾看向镜头，也不要让眼神无目标地游移。
+
+- **先设表演态度，再安排变化。** 每个 4 拍或 8 拍短句选一个主要态度，如自信、俏皮、冷艳或强势。整段可有清楚的表情弧线，例如开场自信微笑、中段挑眉转为俏皮、高潮收紧眼神并定格。变化落在具体拍点或动作触发上，不要每拍都随机换表情。
+- **写清眼神和头部的先后。** 指明目光落在镜头、观众、舞伴或手势目标。需要转头时让眼睛先引导方向，头部随后跟上；回看镜头时先回眼神，再让头部回正。自然眨眼和呼吸可保留，但不能连续眨眼或持续瞪眼来代替表演。
+- **用可见部位代替抽象形容。** 根据景别选眉毛轻挑或收紧、上眼睑开合、眼角收缩、嘴角上扬或单侧微笑、脸颊抬起、下颌短暂绷紧等一到两项。全身舞蹈镜头的表情幅度需稍清楚；中近景可以更细腻。不要只写“充满魅力”“表情丰富”或“看起来很开心”。
+- **让表情与动作相互衬托。** 重要表情可落在身体动作完成后的半拍、重音前的短暂蓄势或定点时刻。快速甩头、低头和侧身时不强求观众同时读清细微表情；安排回正或正面三分之四角度，让眼睛和嘴角重新可见。
+- **区分表演与演唱。** 没有明确演唱或歌词同步要求时，不要让人物持续做夸张口型或无声假唱；可用闭唇微笑、轻抿嘴角、短暂张口呼吸等自然动作。若确实唱歌，按实际音轨或指定歌词安排口型，不凭空添加歌词。
+- **保留角色身份。** 参考图负责面部比例、五官、妆容和身份特征；舞蹈正文负责眼神、表情和头部动作。表演强度可以改变，但不应改变人物年龄感、骨相或脸部识别点。
+
+英文正文可写成：“She holds direct eye contact with the lens through the first two counts, lifts one eyebrow on the snare accent, then lets a playful half-smile form as her gaze follows her right hand. After the head turn, her eyes return to the camera before her chin settles.” 其中的眼神目标、表情部位和先后顺序要按实际编舞替换，不把示例当成固定动作。舞蹈的手部和头发如何与身体同步，见[面部表演、手部编舞与头发二级运动](dance-and-skating.md#面部表演手部编舞与头发二级运动)。
+
 ## 说话、聆听与身体动作
 
 - 分清出声的人与在听的人。按原语言、原词使用目标入口的对白格式。话前让吸气、抬眼或短停服务于剧情，台词中按语意自然换气与布置重音，句尾收声后嘴唇恢复原姿态。镜头看得到口型时让唇、下颌与语音自然同步。听者的嘴唇自然闭合，用目光、重心或手中动作表示接收信息。口型控制与逐句估时分别见 [H3 对白格式](../../h3-visual-prompting/references/h3-formats.md) 与[对白时长](music-and-sound.md#对白时长与切镜)。

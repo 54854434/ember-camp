@@ -1,1 +1,0 @@
-请接手继续开发我的离线硬核丧尸生存经营手游《余烬营地》，仓库为 https://github.com/54854434/ember-camp ，先读取根目录 AGENTS.md 和 docs/START_HERE.md，再核对 PROJECT_STATUS、ROADMAP、ARCHITECTURE、KNOWN_ISSUES 与当前代码和测试，保留既有存档与手机触控，按最高优先级自主推进开发，并在每批完成后同步维护状态、路线图、架构、决定、已知问题和 CHANGELOG，提交 GitHub 并核对 CI，当前无法确认的内容如实保留待验证状态。

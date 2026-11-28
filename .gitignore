@@ -1,6 +1,0 @@
-.godot/
-build/
-*.keystore
-export_credentials.cfg
-assets/NotoSansCJKsc-Regular.otf
-*.tmp

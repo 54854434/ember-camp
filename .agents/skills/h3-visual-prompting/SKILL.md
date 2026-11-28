@@ -16,6 +16,7 @@ description: 为 ComfyUI MiniMax H3 自动增强视频提示词，结合 MiniMax
 - 镜头中有必须可读的招牌、道具屏幕或标识时，用[画内文字与可读性](references/h3-formats.md#画内文字与可读性)处理原字、载体、取景和失败后的参考或后期。
 - 场景跨镜漂移或损伤复原时，按[场景连续性与破坏](../video-scene-direction/references/action-direction.md#场景连续性与破坏)把地标、受影响部位和残留写进实际镜头。
 - 用户反馈运镜没执行、方向跑偏、切镜错时，或要求全程移动机位时，查阅[运镜控制与分段验收](references/camera-control.md)。先交付可单独测试的镜头，再标明需要在时间线精确完成的切点。
+- 舞蹈视频出现脸部僵硬、表情缺失、手臂没有编舞或头发不随动作时，先读[舞蹈表演层](../video-scene-direction/references/dance-and-skating.md#面部表演手部编舞与头发二级运动)，再按媒介读取[真人舞蹈表情](../video-scene-direction/references/live-action-performance.md#舞蹈表演中的面部动作)与[头发二级运动](../video-scene-direction/references/look-design.md#头发与服装的二级运动)。将每项行为写入实际镜头正文，不只写在主体定义或负面提示词中。
 - 连续时空换镜、换角度或分段时，按[易穿帮状态](../video-scene-direction/references/performance-and-blocking.md#逐项核对容易穿帮的状态)核对人物站位、实际朝向、承重、持物、佩戴或挂置位置以及布景状态。关键接点写入前镜落幅和后镜起幅。
 - 排查成片或跟踪多轮调整时，直接读[样片反馈](../short-video-supervisor/references/review-loop.md#拿到样片后)记录时间码、证据和下轮变量。
 - 动作先后、接触或运镜反复跑偏时，用[逐事件验收](../short-video-supervisor/references/event-validation.md)定义通过证据，再选择改正文、做关键帧预演或测试实际运动参考。

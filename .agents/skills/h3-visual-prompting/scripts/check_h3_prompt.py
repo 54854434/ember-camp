@@ -24,6 +24,7 @@ FIELD_PATTERN = re.compile(
 )
 SHOT_PATTERN = re.compile(r"\[Shot (\d+)\]")
 CUT_PATTERN = re.compile(r"At (\d{2}):([0-5]\d)\.(\d{3})\b")
+OPENING_TIMECODE_PATTERN = re.compile(r"(?:(?:At|From)\s+)?\d{1,2}:[0-5]\d(?:\.\d+)?\b", re.IGNORECASE)
 SEGMENT_PATTERN = re.compile(r"(?ms)^\[SHOT_START\][ \t]*\n(.*?)^\[SHOT_END\][ \t]*$")
 SECTION_PATTERN = re.compile(r"(?m)^===([A-Z0-9_]+)===[ \t]*$")
 SECTIONS_1160 = ("H3_PROMPT", "SCENE_INSTRUCTION", "VIDEO_INSTRUCTION", "AUDIO_INSTRUCTION")
@@ -56,8 +57,8 @@ def check_shots(description, mode, duration):
         raise ValueError("Use consecutive shot numbers starting at [Shot 1].")
     if mode == "t2va" and shots[0].start() != 0:
         raise ValueError("Place [Shot 1] immediately after integrated_multimodal_description:.")
-    if CUT_PATTERN.match(description[shots[0].end():].lstrip()):
-        raise ValueError("Shot 1 starts without an explicit cut time.")
+    if OPENING_TIMECODE_PATTERN.match(description[shots[0].end():].lstrip()):
+        raise ValueError("Start [Shot 1] with the scene description. Keep timing ranges in the director's notes.")
 
     previous_time = 0.0
     for shot in shots[1:]:

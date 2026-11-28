@@ -18,6 +18,8 @@
    - 从剧本制作资产时，先按[场次与资产交接](.agents/skills/short-video-production/references/directing.md#先准备资产再完成分镜导演稿)锁定同一角色和地点的正式名称。需要双人画面时，按[双人和多人参考](.agents/skills/h3-visual-prompting/references/reference-assets.md#双人和多人参考)先核定单人身份图与场景主图，再派生同框构图。
 4. [环境状态接镜](.agents/skills/h3-visual-prompting/references/shot-enhancement.md#把环境状态接到下一镜)和[环境连续性核对](.agents/skills/short-video-supervisor/references/event-validation.md#环境连续性核对)用于审查每个切点。上一镜写出接触与留下的结果，下一镜先接该状态再行动。导演清单留在审稿中，成稿用对应 Shot 的自然叙述。
 
+明确要求成人向性内容或指定成人亲密场面专项时，额外读[成人场面调度](.agents/skills/adult-scene-direction/SKILL.md#适用范围与调用)。从同一版本按需打开相关参考，再交回 H3 格式与分段规则。混合剧本只在对应场次调用。
+
 可参照[完整的两镜 Ref2VA 示例](.agents/skills/h3-visual-prompting/references/examples/courtyard-ring-1160.txt)。默认交付可复制的 1160 成稿和确有参考时的素材对应信息。DirectorDesk 清单按需提供。
 
 | 技能 | 用途 |
@@ -26,6 +28,7 @@
 | [short-video-production](.agents/skills/short-video-production/SKILL.md) | 选题、故事大纲、剧本压力测试、分场和运营 |
 | [video-scene-direction](.agents/skills/video-scene-direction/SKILL.md) | 人物站位、动作、运镜、剪辑、表演与声画 |
 | [h3-visual-prompting](.agents/skills/h3-visual-prompting/SKILL.md) | H3 格式、1160 素材绑定、参考图设计和提示词排查 |
+| [adult-scene-direction](.agents/skills/adult-scene-direction/SKILL.md) | 按需处理成年角色的成人亲密场面及 H3 镜头、参考和声音交接 |
 | [directordesk-h3-previs](.agents/skills/directordesk-h3-previs/SKILL.md) | DirectorDesk 白模预演与视频参考交接 |
 
 具体调用示例和协作关系见[技能入口与使用说明](.agents/skills/README.md)。

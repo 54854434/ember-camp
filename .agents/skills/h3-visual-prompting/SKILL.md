@@ -12,6 +12,7 @@ description: 为 ComfyUI MiniMax H3 自动增强视频提示词，结合 MiniMax
 - 从一句话或开放想法开始时用[创意增强](../video-scene-direction/references/prompt-enhancement.md#一句话创意的自动增强)。新写或重写完整 H3 段直接进[四阶段成稿](../video-scene-direction/references/prompt-enhancement.md#h3-四阶段成稿)，先写逐秒导演稿和独立的中文模型执行稿，再转成目标语言封装。
 - 交付 T2VA 或 Ref2VA 文件时，可用[格式检查器](scripts/check_h3_prompt.py)核对模型字段、镜头切点以及 1160 分段标记和素材槽。
 - 做人物造型、白底三视图、系列人物资产包、面部或场景道具参考前，查阅[参考素材与连续性](references/reference-assets.md)。
+- 对明确的成人向亲密场面，直接调用本技能时也先查看[成人场面调度的适用范围](../adult-scene-direction/SKILL.md#适用范围与调用)。把用户指定的可见动作、参考职责和声画接点按实际 H3 模式写入既有字段。
 - 有台词、需要保持静默、或样片出现额外人声时，用[对白与静默控制](references/h3-formats.md#对白与静默控制)核对原文、发声时点和声景。用[对白时长与切镜](../video-scene-direction/references/music-and-sound.md#对白时长与切镜)检查能否保住自然语速、换气与反应。
 - 镜头中有必须可读的招牌、道具屏幕或标识时，用[画内文字与可读性](references/h3-formats.md#画内文字与可读性)处理原字、载体、取景和失败后的参考或后期。
 - 场景跨镜漂移或损伤复原时，按[场景连续性与破坏](../video-scene-direction/references/action-direction.md#场景连续性与破坏)把地标、受影响部位和残留写进实际镜头。

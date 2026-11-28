@@ -8,6 +8,7 @@
 | 选题、编剧、漫剧与单元剧、平台复盘 | `$short-video-production` | [原创短视频制作](short-video-production/SKILL.md) |
 | 运镜切镜、人物调度、真人表演、奇幻场面、声音 | `$video-scene-direction` | [动作与视听调度](video-scene-direction/SKILL.md) |
 | H3 1160 提示词、角色三视图和资产包、参考绑定 | `$h3-visual-prompting` | [H3 视觉提示词](h3-visual-prompting/SKILL.md) |
+| 明确指定的成人亲密场面 | `$adult-scene-direction` | [成人场面调度](adult-scene-direction/SKILL.md) |
 | 白模工程、预演视频与 H3 视频参考接入 | `$directordesk-h3-previs` | [DirectorDesk 白模预演](directordesk-h3-previs/SKILL.md) |
 
 可直接发送 `$short-video-supervisor 把下面的创意做成完整的 MiniMax H3／ComfyUI 1160 提示词。` 聊天模式或其他模型可用[仓库首页的一句话调用](../../README.md#在聊天模式或其他模型中调用)。
@@ -16,7 +17,7 @@
 
 要让调度台维护技法，可以发送 `$short-video-supervisor 学习一轮，找国内外原作者的实测，优先补最近反复出错的 H3 运镜。` 找到的写法、适用入口和复验结果保存在[研究记录](short-video-production/references/technique-findings.md)。以后遇到同类问题，调度台从这份记录接着研究。
 
-## 五个技能如何协作
+## 通用技能与专项如何协作
 
 同一条片共用一份镜头安排，按段与镜号记录必保留内容、可见变化、交付条件和待核对处。各入口沿用已有决定，按本次任务补需要的内容。
 
@@ -29,6 +30,8 @@
 | [制作调度台](short-video-supervisor/SKILL.md) | 统一设计与终审，发现偏差时给对应专长、镜号、修订和复验条件 | 按用户所需交付 1160、双版本或预演，样片比对回到对应环节 |
 
 参考即梦效果时，用[同条件样片方法](short-video-supervisor/references/review-loop.md#比较一句话增强的收益)比较具体看点、节奏、运镜、表演与声画。新构思按场面补叙事和视听细节，已有样片按出现时间做局部校正。
+
+剧本确有成人向场次时，调度台先按[成人场面适用范围](adult-scene-direction/SKILL.md#适用范围与调用)选择涉及的镜头，再把专项决定接回同一份导演安排和 H3 终审。
 
 ## H3 与预演如何交接
 
@@ -52,4 +55,4 @@ H3 提示词从 `$short-video-supervisor` 进入，按[官方正文与本机交�
 | 多余人声、说完后的口型、招牌与屏幕原字 | [对白与静默控制](h3-visual-prompting/references/h3-formats.md#对白与静默控制) · [画内文字与可读性](h3-visual-prompting/references/h3-formats.md#画内文字与可读性) |
 | 拆解参考运镜、判断样片偏差、替换镜头 | [从参考推导路径与修正样片](video-scene-direction/references/camera-and-cutting.md#从参考推导路径与修正样片) |
 
-每个技能从自己的 `SKILL.md` 进入，按任务加载相邻 `references/`。维护时保持此目录与本机五个技能的相对位置一致。公开样稿用于提炼可复用的方法。实际模型字段、素材职责和时长依当前工作流核对。
+每个技能从自己的 `SKILL.md` 进入，按任务加载相邻 `references/`。维护时保持此目录与本机技能的相对位置一致。公开样稿用于提炼可复用的方法。实际模型字段、素材职责和时长依当前工作流核对。

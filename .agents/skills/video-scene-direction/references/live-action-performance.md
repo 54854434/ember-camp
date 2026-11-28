@@ -29,6 +29,17 @@
 
 边说边落泪时，安排台词何处仍能清楚出声、何处换气，按剧情选眼眶湿润、一滴越过同侧下眼睑、脸颊泪痕延续等可见阶段。当晚一步的反应比拉大表情更能读清情绪时，把镜头留给眼神或手中动作。亲密冲突或追上对方的场面，给人物可理解的停下理由，主动站位、面对或结束互动，各自保持可见动线。
 
+### H3 微表情的英文写法
+
+- **先定情绪和幅度。** 在该镜英文动作正文里可试用「情绪词 + `micro expressions`」，如 `subtle sad micro expressions`，提示角色短暂露出克制的悲伤。保留同段内的情绪触发与可见动作。锚定词属于待验证的提示词写法，试法见[微表情对照](../../short-video-production/references/technique-findings.md#微表情的锚定词和部位顺序)。
+- **再写部位和先后。** 用「触发 → 视线落点 → 眼睑、唇或下颌的一两处细小变化 → 恢复视线、开口或保持沉默」组织。落泪、抬手擦泪和抬头属于更明显的动作，跟在细微反应之后，按剧情与景别取用。写擦泪时给手一个清楚的落点，让手落下、口型清楚可见后再开口。对白原文照目标模式嵌入。
+
+例如保留擦泪的一镜。开场取肩上近景，留出手入画的空间。视线、嘴唇和手的先后全部写进同一个镜头的正文。
+
+```text
+The person across the table sets the returned key down with a soft click. Lin shows subtle sad micro expressions. She holds the other person's gaze, then presses her lips together and lowers her eyes to the key. A tear slips onto her left cheek. She quickly brushes it away with the back of her left hand, lowers her hand out of frame, and looks back at the other person before saying <d>我知道了。</d> in a low, steady voice.
+```
+
 ## 说话、聆听与身体动作
 
 - 分清出声的人与在听的人。按原语言、原词使用目标入口的对白格式。话前让吸气、抬眼或短停服务于剧情，台词中按语意自然换气与布置重音，句尾收声后嘴唇恢复原姿态。镜头看得到口型时让唇、下颌与语音自然同步。听者的嘴唇自然闭合，用目光、重心或手中动作表示接收信息。口型控制与逐句估时分别见 [H3 对白格式](../../h3-visual-prompting/references/h3-formats.md) 与[对白时长](music-and-sound.md#对白时长与切镜)。

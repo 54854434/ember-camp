@@ -27,6 +27,7 @@
 | 舞蹈、齐舞变阵或冰上表演 | [舞蹈与冰上动作](../../video-scene-direction/references/dance-and-skating.md) | 承重、脚底接触、路线、音乐短句和镜段出口能对得上，换镜后动作接着走 |
 | 分辨半写实 3DCG、三渲二或真人，表情时画风漂移 | [画面美术与角色渲染](../../video-scene-direction/references/look-design.md) | 起幅定义渲染、光源及材质，开口、转侧脸、强光和切镜后仍维持原定造型与质感。可记住的画面有具体落点 |
 | 真人表演、写真自拍、剧情对白或重要的听者反应 | [真人表演与写真质感](../../video-scene-direction/references/live-action-performance.md)、[对白时长](../../video-scene-direction/references/music-and-sound.md#对白时长与切镜) | 人物视线和表情由具体事件触发，在相应景别可见。光线和焦点保留可辨认的脸。说话人、对白原文、出声与沉默正确 |
+| 微表情读不出，或角色抢在反应前开口 | [H3 微表情的英文写法](../../video-scene-direction/references/live-action-performance.md#h3-微表情的英文写法) | 从成稿核对触发、具体部位、可见变化和开口或沉默的先后。眼与嘴在关键时刻可见。使用情绪锚定词时，把情绪幅度与动作顺序分开验收 |
 | 声音负责冲击、提示或跨镜衔接 | [声音与卡拍](../../video-scene-direction/references/music-and-sound.md) | 能找出声音开始的接触或事件，知道哪层延续、哪层该退下。需要对帧时把准确落点交给时间线 |
 | 固定台词、静默反应或样片乱说话 | [对白与静默控制](../../h3-visual-prompting/references/h3-formats.md#对白与静默控制) | 有原文、说话者和收口动作，声景提供明确的环境或拟音，静默段的表演与发声要求相容 |
 | 招牌、屏幕、包装原字，或指定服装细节必须看清 | [画内文字与可读性](../../h3-visual-prompting/references/h3-formats.md#画内文字与可读性)、[主体外形写法](../../h3-visual-prompting/references/shot-enhancement.md#让主体外形在画面里可辨认) | 字样有原文、载体和读得出的取景。服装与配件有对应景别和实际可见时段 |
